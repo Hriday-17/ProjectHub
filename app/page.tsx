@@ -6,18 +6,16 @@ import { motion } from "framer-motion"
 import Link from "next/link"
 import { ArrowRight, BookOpen, Users, Code, Brain, Database, Shield, Cloud } from "lucide-react"
 import { useEffect, useState } from "react"
+import { ProjectCard } from "@/components/project-card"
 
 export default function Home() {
-  // Use state to handle client-side image loading
   const [imgSrc, setImgSrc] = useState("/placeholder.jpg")
   const [imgLoaded, setImgLoaded] = useState(false)
 
-  // Handle image errors
   const handleImageError = () => {
     setImgSrc("https://placehold.co/600x400?text=AI+Healthcare+Assistant")
   }
 
-  // Set image as loaded
   const handleImageLoad = () => {
     setImgLoaded(true)
   }
@@ -69,161 +67,188 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programs & Fields Section */}
+      {/* Project Categories Section */}
       <section className="py-16">
         <div className="container mx-auto px-4">
-          <div className="flex justify-between items-center mb-10">
+          <div className="text-center mb-12">
             <motion.h2
-              className="text-3xl font-bold text-[#1e3a3a]"
+              className="text-3xl font-bold mb-4 text-[#1e3a3a]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
             >
-              Programs & Fields
+              Explore Projects
             </motion.h2>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
-              <Button variant="outline" className="flex items-center gap-2">
-                View All
-                <ArrowRight className="h-4 w-4" />
-              </Button>
-            </motion.div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <motion.div
-              className="bg-[#f39c12] text-white p-8 rounded-xl shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <Brain className="h-10 w-10" />
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">Popular</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Artificial Intelligence</h3>
-              <p className="mb-6">
-                Explore cutting-edge AI technologies including machine learning, neural networks, and natural language
-                processing.
-              </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects?category=artificial-intelligence">Explore Projects</Link>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              className="bg-[#3498db] text-white p-8 rounded-xl shadow-md"
+            <motion.p
+              className="text-xl text-gray-600"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.1 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
             >
-              <div className="flex justify-between items-start mb-6">
-                <Code className="h-10 w-10" />
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">In Demand</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Software Development</h3>
-              <p className="mb-6">
-                Build practical skills in web, mobile, and desktop application development with modern frameworks and
-                tools.
-              </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects?category=software-development">Explore Projects</Link>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              className="bg-[#2ecc71] text-white p-8 rounded-xl shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <Database className="h-10 w-10" />
-                <span className="text-sm font-medium bg-white/20 px-3 py-1 rounded-full">Growing</span>
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Data Science</h3>
-              <p className="mb-6">
-                Learn to extract insights from complex datasets using statistical analysis, visualization, and machine
-                learning.
-              </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects?category=data-science">Explore Projects</Link>
-              </Button>
-            </motion.div>
+              Choose from a variety of projects that match your interests and goals
+            </motion.p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+          {/* Community Projects Section */}
+          <div className="mb-16">
             <motion.div
-              className="bg-[#e74c3c] text-white p-8 rounded-xl shadow-md"
+              className="text-center mb-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.2 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
             >
-              <div className="flex justify-between items-start mb-6">
-                <Shield className="h-10 w-10" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Cybersecurity</h3>
-              <p className="mb-6">
-                Develop skills to protect systems, networks, and data from digital attacks and security breaches.
+              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">Community-Based Projects</h3>
+              <p className="text-gray-600">
+                Join exciting student-led initiatives and collaborate with peers on innovative solutions
               </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects?category=cybersecurity">Explore Projects</Link>
-              </Button>
             </motion.div>
 
             <motion.div
-              className="bg-[#9b59b6] text-white p-8 rounded-xl shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <Cloud className="h-10 w-10" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">Cloud Computing</h3>
-              <p className="mb-6">
-                Master cloud platforms, serverless architecture, and distributed systems for scalable applications.
-              </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects?category=cloud-computing">Explore Projects</Link>
-              </Button>
-            </motion.div>
-
-            <motion.div
-              className="bg-[#1abc9c] text-white p-8 rounded-xl shadow-md"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ duration: 0.3, delay: 0.3 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
             >
-              <div className="flex justify-between items-start mb-6">
-                <BookOpen className="h-10 w-10" />
-              </div>
-              <h3 className="text-2xl font-bold mb-2">View All Programs</h3>
-              <p className="mb-6">
-                Discover our full range of computer science and AI programs designed to prepare you for the tech
-                industry.
+              <ProjectCard
+                id="c1"
+                title="Open Source Web Framework"
+                category="Web Development"
+                mentor="Community Project"
+                skillLevel="Intermediate"
+                description="Collaborative project to build a modern web framework for developers."
+              />
+              <ProjectCard
+                id="c2"
+                title="Mobile Learning App"
+                category="Mobile Development"
+                mentor="Community Project"
+                skillLevel="Beginner"
+                description="Student-led initiative to create an educational mobile application."
+              />
+              <ProjectCard
+                id="c3"
+                title="Smart Campus IoT"
+                category="Internet of Things"
+                mentor="Community Project"
+                skillLevel="Intermediate"
+                description="Collaborative IoT project to enhance campus facilities and services."
+              />
+              <ProjectCard
+                id="c4"
+                title="Campus Navigation App"
+                category="Campus Navigation"
+                mentor="Community Project"
+                skillLevel="Intermediate"
+                description="Build an indoor navigation system for campus buildings."
+              />
+              <ProjectCard
+                id="c5"
+                title="AI Chatbot for University Services"
+                category="AI Chatbot"
+                mentor="Community Project"
+                skillLevel="Beginner"
+                description="Student-built chatbot to answer campus FAQs and connect services."
+              />
+              <ProjectCard
+                id="c6"
+                title="Open Data Dashboard"
+                category="Data Dashboard"
+                mentor="Community Project"
+                skillLevel="Intermediate"
+                description="Build a dashboard to display public and student-generated data."
+              />
+            </motion.div>
+            
+            <motion.div
+              className="text-center mt-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.4 }}
+            >
+              <Button asChild variant="outline">
+                <Link href="/community-projects">View All Community Projects</Link>
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Mentor Projects Section */}
+          <div>
+            <motion.div
+              className="text-center mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+            >
+              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">Mentor-Based Research Projects</h3>
+              <p className="text-gray-600">
+                Engage in cutting-edge research projects under the guidance of experienced mentors
               </p>
-              <Button asChild variant="secondary" className="bg-white/20 hover:bg-white/30 text-white border-none">
-                <Link href="/projects">Browse All</Link>
+            </motion.div>
+
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-3 gap-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.6 }}
+            >
+              <ProjectCard
+                id="m1"
+                title="Quantum Computing Research"
+                category="Computer Science"
+                mentor="Dr. Sarah Johnson"
+                skillLevel="Advanced"
+                description="Research on quantum algorithms and their applications in cryptography."
+              />
+              <ProjectCard
+                id="m2"
+                title="Sustainable Energy Systems"
+                category="Environmental Engineering"
+                mentor="Prof. Michael Chen"
+                skillLevel="Intermediate"
+                description="Research project on innovative renewable energy storage solutions."
+              />
+              <ProjectCard
+                id="m3"
+                title="Healthcare AI Diagnostics"
+                category="Medical Technology"
+                mentor="Dr. Emily Rodriguez"
+                skillLevel="Advanced"
+                description="Research on AI-powered diagnostic tools for early disease detection."
+              />
+              <ProjectCard
+                id="m4"
+                title="Brain-Computer Interfaces"
+                category="Neural Engineering"
+                mentor="Dr. A. Mehta"
+                skillLevel="Advanced"
+                description="Research on neural signal processing and hands-free tech interfaces."
+              />
+              <ProjectCard
+                id="m5"
+                title="Climate Modeling with AI"
+                category="Climate Science + ML"
+                mentor="Prof. Rina Das"
+                skillLevel="Intermediate"
+                description="Use ML to simulate and analyze climate change patterns."
+              />
+              <ProjectCard
+                id="m6"
+                title="Smart Prosthetics Research"
+                category="Smart Prosthetics"
+                mentor="Dr. Mohan Iyer"
+                skillLevel="Advanced"
+                description="Research project on intelligent prosthetic limb movement prediction."
+              />
+            </motion.div>
+
+            <motion.div
+              className="text-center mt-6"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.3, delay: 0.7 }}
+            >
+              <Button asChild variant="outline">
+                <Link href="/mentor-projects">View All Research Projects</Link>
               </Button>
             </motion.div>
           </div>

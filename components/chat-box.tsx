@@ -1,61 +1,58 @@
-// Component: Replicates community collaboration chat UI
 "use client"
 
 import { useState } from "react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
 import { Avatar } from "./ui/avatar"
-import { Send, Paperclip, Plus } from "lucide-react"
+import { Button } from "./ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
+import { Input } from "./ui/input"
+import { MessageSquare, Send } from "lucide-react"
 
 interface Message {
   id: string
-  sender: string
-  avatar: string
+  sender: {
+    name: string
+    avatar: string
+    role: "mentor" | "student"
+  }
   content: string
   timestamp: string
 }
 
-// Mock data for messages
-const initialMessages: Message[] = [
+const dummyMessages: Message[] = [
   {
     id: "1",
-    sender: "Dr. Sarah Johnson",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "Hello team! I hope everyone is doing well. Let's discuss the project timeline for this week.",
-    timestamp: "10:30 AM",
+    sender: {
+      name: "Dr. Sarah Johnson",
+      avatar: "/placeholder.svg",
+      role: "mentor"
+    },
+    content: "Welcome to the project! Let me know if you have any questions about the research objectives.",
+    timestamp: "2 days ago"
   },
   {
     id: "2",
-    sender: "Michael Chen",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "Hi Dr. Johnson! I've completed the initial research and will share my findings later today.",
-    timestamp: "10:35 AM",
+    sender: {
+      name: "Alex Chen",
+      avatar: "/placeholder.svg",
+      role: "student"
+    },
+    content: "Thanks Dr. Johnson! I've reviewed the project description and I'm particularly interested in the machine learning aspects.",
+    timestamp: "1 day ago"
   },
   {
     id: "3",
-    sender: "Emily Rodriguez",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "I'm working on the prototype design. Should have something to show by tomorrow.",
-    timestamp: "10:40 AM",
-  },
-  {
-    id: "4",
-    sender: "James Wilson",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "I have a question about the data collection methodology. Can we schedule a quick call?",
-    timestamp: "10:45 AM",
-  },
-  {
-    id: "5",
-    sender: "Dr. Sarah Johnson",
-    avatar: "/placeholder.svg?height=40&width=40",
-    content: "Sure, James. Let's have a call at 2 PM today. I'll send a calendar invite.",
-    timestamp: "10:50 AM",
-  },
+    sender: {
+      name: "Dr. Sarah Johnson",
+      avatar: "/placeholder.svg",
+      role: "mentor"
+    },
+    content: "Great to hear that, Alex! I'll share some relevant papers that might help you get started.",
+    timestamp: "1 day ago"
+  }
 ]
 
 export function ChatBox() {
-  const [messages, setMessages] = useState<Message[]>(initialMessages)
+  const [messages, setMessages] = useState<Message[]>(dummyMessages)
   const [newMessage, setNewMessage] = useState("")
 
   const handleSendMessage = () => {
@@ -63,10 +60,13 @@ export function ChatBox() {
 
     const message: Message = {
       id: Date.now().toString(),
-      sender: "You",
-      avatar: "/placeholder.svg?height=40&width=40",
+      sender: {
+        name: "You",
+        avatar: "/placeholder.svg",
+        role: "student"
+      },
       content: newMessage,
-      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      timestamp: "Just now"
     }
 
     setMessages([...messages, message])
@@ -74,59 +74,64 @@ export function ChatBox() {
   }
 
   return (
-    <div className="border rounded-xl shadow-sm overflow-hidden bg-white">
-      <div className="p-4 border-b bg-gray-50">
-        <h2 className="text-xl font-bold">Project Discussion</h2>
-        <p className="text-gray-500 text-sm">AI-Powered Healthcare Assistant</p>
-      </div>
-
-      <div className="h-96 overflow-y-auto p-4 space-y-4">
-        {messages.map((message) => (
-          <div key={message.id} className={`flex ${message.sender === "You" ? "justify-end" : "justify-start"}`}>
-            <div className={`flex max-w-[80%] ${message.sender === "You" ? "flex-row-reverse" : "flex-row"}`}>
-              <Avatar className="h-10 w-10 mr-2">
-                <img src={message.avatar || "/placeholder.svg"} alt={message.sender} />
-              </Avatar>
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <MessageSquare className="h-5 w-5" />
+          Project Discussion
+        </CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          {/* Messages */}
+          <div className="space-y-4">
+            {messages.map((message) => (
               <div
-                className={`rounded-lg p-3 ${message.sender === "You" ? "bg-[#6b3e7c] text-white mr-2" : "bg-gray-100 ml-2"}`}
+                key={message.id}
+                className={`flex gap-4 ${message.sender.role === "mentor" ? "" : "flex-row-reverse"}`}
               >
-                <div className="flex justify-between items-center mb-1">
-                  <span className={`font-medium text-sm ${message.sender === "You" ? "text-white" : "text-gray-700"}`}>
-                    {message.sender}
-                  </span>
-                  <span className={`text-xs ${message.sender === "You" ? "text-white/80" : "text-gray-500"}`}>
-                    {message.timestamp}
-                  </span>
+                <Avatar>
+                  <img src={message.sender.avatar} alt={message.sender.name} />
+                </Avatar>
+                <div className={`flex-1 space-y-1 ${message.sender.role === "mentor" ? "" : "items-end"}`}>
+                  <div className={`flex items-center gap-2 ${message.sender.role === "mentor" ? "" : "flex-row-reverse"}`}>
+                    <p className="font-medium">{message.sender.name}</p>
+                    <p className="text-xs text-gray-500">{message.timestamp}</p>
+                  </div>
+                  <div className={`rounded-lg p-3 ${
+                    message.sender.role === "mentor" 
+                      ? "bg-gray-100 text-gray-800" 
+                      : "bg-[#6b3e7c] text-white"
+                  }`}>
+                    <p>{message.content}</p>
+                  </div>
                 </div>
-                <p className={`text-sm ${message.sender === "You" ? "text-white" : "text-gray-800"}`}>
-                  {message.content}
-                </p>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className="p-4 border-t">
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="icon" className="rounded-full">
-            <Plus className="h-4 w-4" />
-          </Button>
-          <Button variant="outline" size="icon" className="rounded-full">
-            <Paperclip className="h-4 w-4" />
-          </Button>
-          <Input
-            placeholder="Type your message..."
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
-            className="flex-1"
-          />
-          <Button onClick={handleSendMessage} className="bg-[#6b3e7c] hover:bg-[#5a2e6b]" disabled={!newMessage.trim()}>
-            <Send className="h-4 w-4" />
-          </Button>
+          {/* Message Input */}
+          <div className="flex gap-2">
+            <Input
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Type your message..."
+              className="flex-1"
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  handleSendMessage()
+                }
+              }}
+            />
+            <Button
+              onClick={handleSendMessage}
+              className="bg-[#6b3e7c] hover:bg-[#5a2e6b]"
+            >
+              <Send className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   )
 }
