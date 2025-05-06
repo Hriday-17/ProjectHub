@@ -61,7 +61,9 @@ export function Navbar() {
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+              <NavLink href="/discover-projects">Discover Ideas</NavLink>
               <NavLink href="/mentors">Mentors</NavLink>
+              <NavLink href="/forum">Chat Forum</NavLink>
               <NavLink href="/tasks">Tasks</NavLink>
               <NavLink href="/contact">Contact</NavLink>
             </div>
@@ -125,7 +127,9 @@ export function Navbar() {
               <NavLink href="/about" onClick={toggleMenu}>About</NavLink>
               <NavLink href="/community-projects" onClick={toggleMenu}>Community Projects</NavLink>
               <NavLink href="/mentor-projects" onClick={toggleMenu}>Mentor Projects</NavLink>
+              <NavLink href="/discover-projects" onClick={toggleMenu}>Discover Ideas</NavLink>
               <NavLink href="/mentors" onClick={toggleMenu}>Mentors</NavLink>
+              <NavLink href="/forum" onClick={toggleMenu}>Chat Forum</NavLink>
               <NavLink href="/tasks" onClick={toggleMenu}>Tasks</NavLink>
               <NavLink href="/contact" onClick={toggleMenu}>Contact</NavLink>
               

@@ -60,7 +60,7 @@ export default function Home() {
               transition={{ duration: 0.3, delay: 0.2 }}
             >
               <Button asChild className="bg-[#6b3e7c] hover:bg-[#5a2e6b] text-white px-8 py-6 text-lg rounded-lg">
-                <Link href="/projects">Explore Projects</Link>
+                <Link href="/discover-projects">Discover Project Ideas</Link>
               </Button>
             </motion.div>
           </div>
