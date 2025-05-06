@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar } from "@/components/ui/avatar"
 import { TeamFormation } from "@/components/team-formation"
 import { MentorPanel } from "@/components/mentor-panel"
-import { ChatBox } from "@/components/chat-box"
+import { ProjectChat } from "@/components/ProjectChat"
 import { ArrowLeft, Calendar, Users, BookOpen } from "lucide-react"
 import { motion } from "framer-motion"
 import { communityProjects } from "@/lib/data/communityProjects"
@@ -23,11 +23,11 @@ export default function CommunityProjectPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gray-50">
       <Navbar />
 
-      <main className="flex-1 py-12 bg-gray-50 mt-8">
-        <div className="container mx-auto px-4">
+      <main className="flex-1 pt-20">
+        <div className="container mx-auto px-4 py-8">
           {/* Back Button */}
           <Link
             href="/community-projects"
@@ -86,7 +86,6 @@ export default function CommunityProjectPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-2 space-y-8">
               <TeamFormation team={project.teamMembers} />
-              <ChatBox />
             </div>
             <div>
               <MentorPanel
@@ -100,6 +99,12 @@ export default function CommunityProjectPage() {
               />
             </div>
           </div>
+
+          {/* Project Chat Section */}
+          <section className="mt-8">
+            <h2 className="text-2xl font-bold text-[#1e3a3a] mb-6">Project Discussion</h2>
+            <ProjectChat slug={slug} />
+          </section>
         </div>
       </main>
     </div>

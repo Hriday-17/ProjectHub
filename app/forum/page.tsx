@@ -7,17 +7,75 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Search, Users, MessageSquare, Plus } from "lucide-react"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuLabel
+} from "@/components/ui/dropdown-menu"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Search, Users, MessageSquare, Plus, ChevronDown } from "lucide-react"
 import { motion } from "framer-motion"
-import { forums } from "@/lib/data/forums"
+import { forums as initialForums, type Forum } from "@/lib/data/forums"
+import { communityProjects } from "@/lib/data/communityProjects"
+import { useToast } from "@/components/ui/use-toast"
 
 export default function ForumPage() {
   const [searchQuery, setSearchQuery] = useState("")
+  const [forums, setForums] = useState<Forum[]>(initialForums)
+  const { toast } = useToast()
   
   const filteredForums = forums.filter(forum => 
     forum.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
     forum.category.toLowerCase().includes(searchQuery.toLowerCase())
   )
+
+  const handleCreateForum = (projectTitle: string, slug: string, category: string) => {
+    // Check if forum already exists
+    if (forums.some(f => f.slug === slug)) {
+      toast({
+        title: "Forum Already Exists",
+        description: `A forum for "${projectTitle}" already exists.`,
+        variant: "destructive",
+        duration: 3000,
+      })
+      return
+    }
+
+    // Create new forum
+    const newForum: Forum = {
+      id: Date.now().toString(),
+      slug,
+      projectTitle,
+      category,
+      lastActive: "just now",
+      participants: [
+        {
+          name: "You",
+          avatar: "/placeholder.svg",
+          role: "student",
+          online: true
+        }
+      ],
+      messages: [],
+      unreadCount: 0
+    }
+
+    // Add to forums list
+    setForums(prev => [newForum, ...prev])
+    
+    toast({
+      title: "Success",
+      description: `Forum created for: ${projectTitle}`,
+      duration: 3000,
+    })
+  }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -32,12 +90,50 @@ export default function ForumPage() {
                 <h1 className="text-3xl font-bold text-[#1e3a3a]">Project Forums</h1>
                 <p className="text-gray-600">Join discussions and collaborate with your project team</p>
               </div>
-              <Button asChild className="bg-[#6b3e7c] hover:bg-[#5a2e6b] whitespace-nowrap">
-                <Link href="/forum/create" className="flex items-center gap-2">
-                  <Plus className="h-4 w-4" />
-                  Create Forum
-                </Link>
-              </Button>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button className="bg-[#6b3e7c] hover:bg-[#5a2e6b] whitespace-nowrap">
+                    <Plus className="h-4 w-4 mr-2" />
+                    Create Forum
+                    <ChevronDown className="h-4 w-4 ml-2" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-64">
+                  <DropdownMenuLabel>Select a Project</DropdownMenuLabel>
+                  {communityProjects.map((project) => {
+                    const hasExistingForum = forums.some(f => f.slug === project.slug)
+                    
+                    return (
+                      <TooltipProvider key={project.id}>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div>
+                              <DropdownMenuItem
+                                className={`px-4 py-2 cursor-pointer ${
+                                  hasExistingForum ? 'opacity-50' : 'hover:bg-gray-100'
+                                }`}
+                                disabled={hasExistingForum}
+                                onClick={() => handleCreateForum(project.title, project.slug, project.category)}
+                              >
+                                <div className="flex flex-col">
+                                  <span className="font-medium">{project.title}</span>
+                                  <span className="text-sm text-gray-500">{project.category}</span>
+                                </div>
+                              </DropdownMenuItem>
+                            </div>
+                          </TooltipTrigger>
+                          {hasExistingForum && (
+                            <TooltipContent>
+                              <p>Forum already exists for this project</p>
+                            </TooltipContent>
+                          )}
+                        </Tooltip>
+                      </TooltipProvider>
+                    )
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             {/* Search Section */}
