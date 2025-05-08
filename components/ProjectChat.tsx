@@ -1,115 +1,107 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
-import { Avatar } from "./ui/avatar"
-import { Button } from "./ui/button"
-import { Card } from "./ui/card"
-import { Input } from "./ui/input"
-import { ScrollArea } from "./ui/scroll-area"
+import { useChat } from "@/contexts/ChatContext"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Avatar } from "@/components/ui/avatar"
+import { Badge } from "@/components/ui/badge"
 import { Send } from "lucide-react"
-import { chatData, type ChatMessage } from "@/lib/data/chatMessages"
 
-interface ProjectChatProps {
-  slug: string
-}
+// Helper function to generate unique IDs
+const generateUniqueId = () => {
+  return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+};
 
-export function ProjectChat({ slug }: ProjectChatProps) {
-  const [messages, setMessages] = useState<ChatMessage[]>(chatData[slug] || [])
+export function ProjectChat({ slug }: { slug: string }) {
+  const { getChat, addMessage } = useChat()
   const [newMessage, setNewMessage] = useState("")
   const scrollAreaRef = useRef<HTMLDivElement>(null)
+  const chatMessages = getChat(slug)
 
   useEffect(() => {
-    // Update messages when chatData changes
-    setMessages(chatData[slug] || [])
-  }, [slug])
-
-  useEffect(() => {
-    // Scroll to bottom when messages update
     if (scrollAreaRef.current) {
       const scrollArea = scrollAreaRef.current
       scrollArea.scrollTop = scrollArea.scrollHeight
     }
-  }, [messages])
+  }, [chatMessages])
 
   const handleSendMessage = () => {
     if (!newMessage.trim()) return
 
-    const message: ChatMessage = {
-      id: Date.now().toString(),
+    const message = {
+      id: generateUniqueId(),
       sender: {
         name: "You",
         avatar: "/placeholder.svg",
-        role: "student"
+        role: "student" as const
       },
-      content: newMessage,
+      content: newMessage.trim(),
       timestamp: new Date().toISOString()
     }
 
-    // Update both local state and shared data
-    const updatedMessages = [...messages, message]
-    setMessages(updatedMessages)
-    chatData[slug] = updatedMessages
+    addMessage(slug, message)
     setNewMessage("")
   }
 
-  const formatTimestamp = (timestamp: string) => {
-    return new Intl.DateTimeFormat('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true
-    }).format(new Date(timestamp))
-  }
-
   return (
-    <Card className="flex flex-col h-[600px]">
+    <div className="flex flex-col h-[calc(100vh-12rem)] bg-white rounded-lg shadow-sm">
       <ScrollArea ref={scrollAreaRef} className="flex-1 p-4">
         <div className="space-y-4">
-          {messages.map((message) => (
+          {chatMessages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-4 ${message.sender.name === "You" ? "flex-row-reverse" : ""}`}
+              className={`flex items-start gap-3 ${
+                message.sender.name === "You" ? "flex-row-reverse" : ""
+              }`}
             >
-              <Avatar className="h-8 w-8">
+              <Avatar>
                 <img src={message.sender.avatar} alt={message.sender.name} />
               </Avatar>
-              <div className={`flex-1 space-y-1 ${message.sender.name === "You" ? "items-end" : ""}`}>
-                <div className={`flex items-center gap-2 ${message.sender.name === "You" ? "flex-row-reverse" : ""}`}>
-                  <p className="text-sm font-medium">{message.sender.name}</p>
-                  <p className="text-xs text-gray-500">{formatTimestamp(message.timestamp)}</p>
+              <div className={`flex flex-col ${
+                message.sender.name === "You" ? "items-end" : ""
+              }`}>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{message.sender.name}</span>
+                  <Badge variant="secondary" className="capitalize">
+                    {message.sender.role}
+                  </Badge>
                 </div>
-                <div className={`rounded-lg p-3 max-w-[80%] ${
-                  message.sender.name === "You" 
-                    ? "bg-[#6b3e7c] text-white ml-auto" 
-                    : "bg-gray-100 text-gray-800"
+                <div className={`mt-1 p-3 rounded-lg ${
+                  message.sender.name === "You"
+                    ? "bg-[#6b3e7c] text-white"
+                    : "bg-gray-100"
                 }`}>
-                  <p>{message.content}</p>
+                  {message.content}
                 </div>
+                <span className="text-xs text-gray-500 mt-1">
+                  {new Date(message.timestamp).toLocaleTimeString()}
+                </span>
               </div>
             </div>
           ))}
         </div>
       </ScrollArea>
-
       <div className="p-4 border-t">
-        <div className="flex gap-2">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            handleSendMessage()
+          }}
+          className="flex gap-2"
+        >
           <Input
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleSendMessage()
-              }
-            }}
+            className="flex-1"
           />
-          <Button
-            onClick={handleSendMessage}
-            className="bg-[#6b3e7c] hover:bg-[#5a2e6b]"
-          >
+          <Button type="submit" className="bg-[#6b3e7c] hover:bg-[#5a2e6b]">
             <Send className="h-4 w-4" />
           </Button>
-        </div>
+        </form>
       </div>
-    </Card>
+    </div>
   )
 }

@@ -1,12 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Navbar } from "@/components/navbar"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,23 +31,40 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { Search, Users, MessageSquare, Plus, ChevronDown } from "lucide-react"
+import { Search, Users, MessageSquare, Plus, ChevronDown, Trash2 } from "lucide-react"
 import { motion } from "framer-motion"
 import { forums as initialForums, type Forum } from "@/lib/data/forums"
 import { communityProjects } from "@/lib/data/communityProjects"
 import { useToast } from "@/components/ui/use-toast"
+import { useChat } from "@/contexts/ChatContext"
 
 export default function ForumPage() {
   const [searchQuery, setSearchQuery] = useState("")
-  const [forums, setForums] = useState<Forum[]>(initialForums)
+  const [forums, setForums] = useState<Forum[]>([])
   const { toast } = useToast()
+  const { clearChat } = useChat()
+
+  // Load forums from localStorage on mount
+  useEffect(() => {
+    const stored = localStorage.getItem('activeForums')
+    if (stored) {
+      setForums(JSON.parse(stored))
+    } else {
+      setForums(initialForums)
+    }
+  }, [])
+
+  // Save forums to localStorage when updated
+  useEffect(() => {
+    localStorage.setItem('activeForums', JSON.stringify(forums))
+  }, [forums])
   
   const filteredForums = forums.filter(forum => 
     forum.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
     forum.category.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
-  const handleCreateForum = (projectTitle: string, slug: string, category: string) => {
+  const handleCreateForum = async (projectTitle: string, slug: string, category: string) => {
     // Check if forum already exists
     if (forums.some(f => f.slug === slug)) {
       toast({
@@ -54,7 +82,7 @@ export default function ForumPage() {
       slug,
       projectTitle,
       category,
-      lastActive: "just now",
+      lastActive: new Date().toISOString(),
       participants: [
         {
           name: "You",
@@ -67,14 +95,58 @@ export default function ForumPage() {
       unreadCount: 0
     }
 
-    // Add to forums list
+    // Add to forums list and localStorage
     setForums(prev => [newForum, ...prev])
-    
-    toast({
-      title: "Success",
-      description: `Forum created for: ${projectTitle}`,
-      duration: 3000,
-    })
+
+    // Prepare for future database integration
+    try {
+      // await fetch('/api/forum/create', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(newForum)
+      // })
+
+      toast({
+        title: "Success",
+        description: `Forum created for: ${projectTitle}`,
+        duration: 3000,
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to create forum. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      })
+    }
+  }
+
+  const handleDeleteForum = async (slug: string, projectTitle: string) => {
+    try {
+      // Remove from local state
+      setForums(prev => prev.filter(f => f.slug !== slug))
+      
+      // Clear chat messages
+      clearChat(slug)
+
+      // Prepare for future database integration
+      // await fetch(`/api/forum/${slug}`, {
+      //   method: 'DELETE'
+      // })
+
+      toast({
+        title: "Forum Deleted",
+        description: `Forum "${projectTitle}" has been removed.`,
+        duration: 3000,
+      })
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete forum. Please try again.",
+        variant: "destructive",
+        duration: 3000,
+      })
+    }
   }
 
   return (
@@ -111,9 +183,8 @@ export default function ForumPage() {
                             <div>
                               <DropdownMenuItem
                                 className={`px-4 py-2 cursor-pointer ${
-                                  hasExistingForum ? 'opacity-50' : 'hover:bg-gray-100'
+                                  hasExistingForum ? 'opacity-50 pointer-events-none' : 'hover:bg-gray-100'
                                 }`}
-                                disabled={hasExistingForum}
                                 onClick={() => handleCreateForum(project.title, project.slug, project.category)}
                               >
                                 <div className="flex flex-col">
@@ -125,7 +196,7 @@ export default function ForumPage() {
                           </TooltipTrigger>
                           {hasExistingForum && (
                             <TooltipContent>
-                              <p>Forum already exists for this project</p>
+                              <p>Forum already created</p>
                             </TooltipContent>
                           )}
                         </Tooltip>
@@ -159,7 +230,36 @@ export default function ForumPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <Card className="flex flex-col h-full min-h-[260px] p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                  <Card className="relative flex flex-col h-full min-h-[260px] p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                    <AlertDialog>
+                      <AlertDialogTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="absolute top-2 right-2 text-gray-400 hover:text-red-500"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>Delete Forum?</AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This will permanently delete the forum and all its messages. This action cannot be undone.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => handleDeleteForum(forum.slug, forum.projectTitle)}
+                            className="bg-red-500 hover:bg-red-600 text-white"
+                          >
+                            Delete
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+
                     <div className="flex flex-col space-y-3">
                       <div className="flex justify-between items-start">
                         <div className="space-y-2">
@@ -187,7 +287,7 @@ export default function ForumPage() {
                       </div>
 
                       <p className="text-sm text-gray-500">
-                        Last active: {forum.lastActive}
+                        Last active: {new Date(forum.lastActive).toLocaleString()}
                       </p>
                     </div>
 

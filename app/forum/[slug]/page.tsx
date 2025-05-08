@@ -2,21 +2,47 @@
 
 import { useParams } from "next/navigation"
 import Link from "next/link"
+import { useState, useEffect } from "react"
 import { Navbar } from "@/components/navbar"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
 import { ProjectChat } from "@/components/ProjectChat"
 import { ArrowLeft, Users } from "lucide-react"
-import { forums } from "@/lib/data/forums"
+
+interface Forum {
+  slug: string
+  projectTitle: string
+  category: string
+  participants: { name: string; role: string }[]
+}
 
 export default function ForumChatPage() {
   const params = useParams()
   const slug = params?.slug as string
-  const forum = forums.find(f => f.slug === slug)
+  const [forum, setForum] = useState<Forum | null>(null)
+  
+  useEffect(() => {
+    const stored = localStorage.getItem('activeForums')
+    if (stored) {
+      const forums = JSON.parse(stored)
+      const found = forums.find((f: Forum) => f.slug === slug)
+      setForum(found || null)
+    }
+  }, [slug])
   
   if (!forum) {
-    return <div>Forum not found</div>
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold mb-2">Forum not found</h2>
+          <p className="text-gray-600 mb-4">The forum you're looking for doesn't exist or has been deleted.</p>
+          <Button asChild>
+            <Link href="/forum">Return to Forums</Link>
+          </Button>
+        </div>
+      </div>
+    )
   }
 
   return (
