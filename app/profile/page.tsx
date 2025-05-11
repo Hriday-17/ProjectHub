@@ -1,20 +1,20 @@
 // Profile page showing user information and settings
-import { Navbar } from "@/components/navbar"
-import { ProfileForm } from "@/components/profile-form"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Navbar } from '@/components/navbar';
+import { ProfileForm } from '@/components/profile-form';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function ProfilePage() {
   // Mock user data
   const userData = {
-    name: "John Doe",
-    email: "john.doe@university.edu",
-    role: "student",
-    department: "engineering",
-    skills: ["React", "JavaScript", "UI/UX Design"],
-    bio: "Computer Science student with a passion for web development and AI. Looking to collaborate on innovative projects.",
-    github: "https://github.com/johndoe",
-    linkedin: "https://linkedin.com/in/johndoe",
-  }
+    name: 'John Doe',
+    email: 'john.doe@university.edu',
+    role: 'student',
+    department: 'engineering',
+    skills: ['React', 'JavaScript', 'UI/UX Design'],
+    bio: 'Computer Science student with a passion for web development and AI. Looking to collaborate on innovative projects.',
+    github: 'https://github.com/johndoe',
+    linkedin: 'https://linkedin.com/in/johndoe',
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -27,13 +27,22 @@ export default function ProfilePage() {
           <div className="bg-white rounded-xl shadow-sm overflow-hidden">
             <Tabs defaultValue="profile">
               <TabsList className="bg-gray-100 p-0 h-14">
-                <TabsTrigger value="profile" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                <TabsTrigger
+                  value="profile"
+                  className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                >
                   Profile Information
                 </TabsTrigger>
-                <TabsTrigger value="account" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                <TabsTrigger
+                  value="account"
+                  className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                >
                   Account Settings
                 </TabsTrigger>
-                <TabsTrigger value="notifications" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                <TabsTrigger
+                  value="notifications"
+                  className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                >
                   Notifications
                 </TabsTrigger>
               </TabsList>
@@ -56,5 +65,5 @@ export default function ProfilePage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

@@ -1,25 +1,25 @@
-"use client"
+'use client';
 
-import { useParams } from "next/navigation"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar } from "@/components/ui/avatar"
-import { TeamFormation } from "@/components/team-formation"
-import { MentorPanel } from "@/components/mentor-panel"
-import { ProjectChat } from "@/components/ProjectChat"
-import { ArrowLeft, Calendar, Users, BookOpen } from "lucide-react"
-import { motion } from "framer-motion"
-import { communityProjects } from "@/lib/data/communityProjects"
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar } from '@/components/ui/avatar';
+import { TeamFormation } from '@/components/team-formation';
+import { MentorPanel } from '@/components/mentor-panel';
+import { ProjectChat } from '@/components/ProjectChat';
+import { ArrowLeft, Calendar, Users, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { communityProjects } from '@/lib/data/communityProjects';
 
 export default function CommunityProjectPage() {
-  const params = useParams()
-  const slug = params?.slug as string
-  const project = communityProjects.find(p => p.slug === slug)
+  const params = useParams();
+  const slug = params?.slug as string;
+  const project = communityProjects.find((p) => p.slug === slug);
 
   if (!project) {
-    return <div>Project not found</div>
+    return <div>Project not found</div>;
   }
 
   return (
@@ -91,10 +91,10 @@ export default function CommunityProjectPage() {
               <MentorPanel
                 mentor={{
                   name: project.mentor,
-                  title: "Community Lead",
+                  title: 'Community Lead',
                   department: project.category,
-                  avatar: "/placeholder.svg",
-                  status: "Approved"
+                  avatar: '/placeholder.svg',
+                  status: 'Approved',
                 }}
               />
             </div>
@@ -108,5 +108,5 @@ export default function CommunityProjectPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

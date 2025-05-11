@@ -1,20 +1,20 @@
-"use client"
+'use client';
 
-import { Avatar } from "./ui/avatar"
-import { Button } from "./ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import Link from "next/link"
-import { Plus, Users } from "lucide-react"
+import { Avatar } from './ui/avatar';
+import { Button } from './ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import Link from 'next/link';
+import { Plus, Users } from 'lucide-react';
 
 interface TeamMember {
-  name: string
-  role: string
-  avatar: string
-  profile: string
+  name: string;
+  role: string;
+  avatar: string;
+  profile: string;
 }
 
 interface TeamFormationProps {
-  team?: TeamMember[]
+  team?: TeamMember[];
 }
 
 export function TeamFormation({ team = [] }: TeamFormationProps) {
@@ -69,5 +69,5 @@ export function TeamFormation({ team = [] }: TeamFormationProps) {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

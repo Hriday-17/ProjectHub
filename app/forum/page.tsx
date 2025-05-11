@@ -1,12 +1,12 @@
-"use client"
+'use client';
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Navbar } from '@/components/navbar';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,63 +17,59 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+} from '@/components/ui/alert-dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuLabel
-} from "@/components/ui/dropdown-menu"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Search, Users, MessageSquare, Plus, ChevronDown, Trash2 } from "lucide-react"
-import { motion } from "framer-motion"
-import { forums as initialForums, type Forum } from "@/lib/data/forums"
-import { communityProjects } from "@/lib/data/communityProjects"
-import { useToast } from "@/components/ui/use-toast"
-import { useChat } from "@/contexts/ChatContext"
+  DropdownMenuLabel,
+} from '@/components/ui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Search, Users, MessageSquare, Plus, ChevronDown, Trash2 } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { forums as initialForums, type Forum } from '@/lib/data/forums';
+import { communityProjects } from '@/lib/data/communityProjects';
+import { useToast } from '@/components/ui/use-toast';
+import { useChat } from '@/contexts/ChatContext';
 
 export default function ForumPage() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [forums, setForums] = useState<Forum[]>([])
-  const { toast } = useToast()
-  const { clearChat } = useChat()
+  const [searchQuery, setSearchQuery] = useState('');
+  const [forums, setForums] = useState<Forum[]>([]);
+  const { toast } = useToast();
+  const { clearChat } = useChat();
 
   // Load forums from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('activeForums')
+    const stored = localStorage.getItem('activeForums');
     if (stored) {
-      setForums(JSON.parse(stored))
+      setForums(JSON.parse(stored));
     } else {
-      setForums(initialForums)
+      setForums(initialForums);
     }
-  }, [])
+  }, []);
 
   // Save forums to localStorage when updated
   useEffect(() => {
-    localStorage.setItem('activeForums', JSON.stringify(forums))
-  }, [forums])
-  
-  const filteredForums = forums.filter(forum => 
-    forum.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    forum.category.toLowerCase().includes(searchQuery.toLowerCase())
-  )
+    localStorage.setItem('activeForums', JSON.stringify(forums));
+  }, [forums]);
+
+  const filteredForums = forums.filter(
+    (forum) =>
+      forum.projectTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      forum.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   const handleCreateForum = async (projectTitle: string, slug: string, category: string) => {
     // Check if forum already exists
-    if (forums.some(f => f.slug === slug)) {
+    if (forums.some((f) => f.slug === slug)) {
       toast({
-        title: "Forum Already Exists",
+        title: 'Forum Already Exists',
         description: `A forum for "${projectTitle}" already exists.`,
-        variant: "destructive",
+        variant: 'destructive',
         duration: 3000,
-      })
-      return
+      });
+      return;
     }
 
     // Create new forum
@@ -85,18 +81,18 @@ export default function ForumPage() {
       lastActive: new Date().toISOString(),
       participants: [
         {
-          name: "You",
-          avatar: "/placeholder.svg",
-          role: "student",
-          online: true
-        }
+          name: 'You',
+          avatar: '/placeholder.svg',
+          role: 'student',
+          online: true,
+        },
       ],
       messages: [],
-      unreadCount: 0
-    }
+      unreadCount: 0,
+    };
 
     // Add to forums list and localStorage
-    setForums(prev => [newForum, ...prev])
+    setForums((prev) => [newForum, ...prev]);
 
     // Prepare for future database integration
     try {
@@ -107,27 +103,27 @@ export default function ForumPage() {
       // })
 
       toast({
-        title: "Success",
+        title: 'Success',
         description: `Forum created for: ${projectTitle}`,
         duration: 3000,
-      })
+      });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to create forum. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to create forum. Please try again.',
+        variant: 'destructive',
         duration: 3000,
-      })
+      });
     }
-  }
+  };
 
   const handleDeleteForum = async (slug: string, projectTitle: string) => {
     try {
       // Remove from local state
-      setForums(prev => prev.filter(f => f.slug !== slug))
-      
+      setForums((prev) => prev.filter((f) => f.slug !== slug));
+
       // Clear chat messages
-      clearChat(slug)
+      clearChat(slug);
 
       // Prepare for future database integration
       // await fetch(`/api/forum/${slug}`, {
@@ -135,19 +131,19 @@ export default function ForumPage() {
       // })
 
       toast({
-        title: "Forum Deleted",
+        title: 'Forum Deleted',
         description: `Forum "${projectTitle}" has been removed.`,
         duration: 3000,
-      })
+      });
     } catch (error) {
       toast({
-        title: "Error",
-        description: "Failed to delete forum. Please try again.",
-        variant: "destructive",
+        title: 'Error',
+        description: 'Failed to delete forum. Please try again.',
+        variant: 'destructive',
         duration: 3000,
-      })
+      });
     }
-  }
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -160,7 +156,9 @@ export default function ForumPage() {
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold text-[#1e3a3a]">Project Forums</h1>
-                <p className="text-gray-600">Join discussions and collaborate with your project team</p>
+                <p className="text-gray-600">
+                  Join discussions and collaborate with your project team
+                </p>
               </div>
 
               <DropdownMenu>
@@ -174,8 +172,8 @@ export default function ForumPage() {
                 <DropdownMenuContent align="end" className="w-64">
                   <DropdownMenuLabel>Select a Project</DropdownMenuLabel>
                   {communityProjects.map((project) => {
-                    const hasExistingForum = forums.some(f => f.slug === project.slug)
-                    
+                    const hasExistingForum = forums.some((f) => f.slug === project.slug);
+
                     return (
                       <TooltipProvider key={project.id}>
                         <Tooltip>
@@ -183,9 +181,13 @@ export default function ForumPage() {
                             <div>
                               <DropdownMenuItem
                                 className={`px-4 py-2 cursor-pointer ${
-                                  hasExistingForum ? 'opacity-50 pointer-events-none' : 'hover:bg-gray-100'
+                                  hasExistingForum
+                                    ? 'opacity-50 pointer-events-none'
+                                    : 'hover:bg-gray-100'
                                 }`}
-                                onClick={() => handleCreateForum(project.title, project.slug, project.category)}
+                                onClick={() =>
+                                  handleCreateForum(project.title, project.slug, project.category)
+                                }
                               >
                                 <div className="flex flex-col">
                                   <span className="font-medium">{project.title}</span>
@@ -201,7 +203,7 @@ export default function ForumPage() {
                           )}
                         </Tooltip>
                       </TooltipProvider>
-                    )
+                    );
                   })}
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -245,7 +247,8 @@ export default function ForumPage() {
                         <AlertDialogHeader>
                           <AlertDialogTitle>Delete Forum?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            This will permanently delete the forum and all its messages. This action cannot be undone.
+                            This will permanently delete the forum and all its messages. This action
+                            cannot be undone.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -263,7 +266,9 @@ export default function ForumPage() {
                     <div className="flex flex-col space-y-3">
                       <div className="flex justify-between items-start">
                         <div className="space-y-2">
-                          <h3 className="text-xl font-semibold text-[#1e3a3a] line-clamp-2">{forum.projectTitle}</h3>
+                          <h3 className="text-xl font-semibold text-[#1e3a3a] line-clamp-2">
+                            {forum.projectTitle}
+                          </h3>
                           <Badge variant="secondary" className="bg-[#f0e5ff] text-[#6b3e7c]">
                             {forum.category}
                           </Badge>
@@ -292,13 +297,8 @@ export default function ForumPage() {
                     </div>
 
                     <div className="mt-auto pt-4">
-                      <Button
-                        asChild
-                        className="w-full bg-[#213635] hover:bg-[#1a2b2b] text-white"
-                      >
-                        <Link href={`/forum/${forum.slug}`}>
-                          Join Discussion
-                        </Link>
+                      <Button asChild className="w-full bg-[#213635] hover:bg-[#1a2b2b] text-white">
+                        <Link href={`/forum/${forum.slug}`}>Join Discussion</Link>
                       </Button>
                     </div>
                   </Card>
@@ -316,5 +316,5 @@ export default function ForumPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

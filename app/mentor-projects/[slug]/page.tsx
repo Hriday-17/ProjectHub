@@ -1,25 +1,25 @@
-"use client"
+'use client';
 
-import { useParams } from "next/navigation"
-import Link from "next/link"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Avatar } from "@/components/ui/avatar"
-import { TeamFormation } from "@/components/team-formation"
-import { MentorPanel } from "@/components/mentor-panel"
-import { ProjectChat } from "@/components/ProjectChat"
-import { ArrowLeft, Calendar, Users, BookOpen } from "lucide-react"
-import { motion } from "framer-motion"
-import { mentorProjects } from "@/lib/data/mentorProjects"
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Avatar } from '@/components/ui/avatar';
+import { TeamFormation } from '@/components/team-formation';
+import { MentorPanel } from '@/components/mentor-panel';
+import { ProjectChat } from '@/components/ProjectChat';
+import { ArrowLeft, Calendar, Users, BookOpen } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { mentorProjects } from '@/lib/data/mentorProjects';
 
 export default function MentorProjectPage() {
-  const params = useParams()
-  const slug = params?.slug as string
-  const project = mentorProjects.find(p => p.slug === slug)
+  const params = useParams();
+  const slug = params?.slug as string;
+  const project = mentorProjects.find((p) => p.slug === slug);
 
   if (!project) {
-    return <div>Project not found</div>
+    return <div>Project not found</div>;
   }
 
   return (
@@ -100,5 +100,5 @@ export default function MentorProjectPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

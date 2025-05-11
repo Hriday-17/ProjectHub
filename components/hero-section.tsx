@@ -1,7 +1,7 @@
-"use client"
+'use client';
 
-import { Button } from "./ui/button"
-import { motion } from "framer-motion"
+import { Button } from './ui/button';
+import { motion } from 'framer-motion';
 
 export function HeroSection() {
   return (
@@ -19,8 +19,8 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <span className="text-yellow-400">"</span> ProjectHub: Connecting Students with Transformative Projects{" "}
-            <span className="text-yellow-400">"</span>
+            <span className="text-yellow-400">"</span> ProjectHub: Connecting Students with
+            Transformative Projects <span className="text-yellow-400">"</span>
           </motion.h1>
           <motion.p
             className="text-xl mb-8"
@@ -28,8 +28,8 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            A ground-breaking initiative that empowers students through collaborative projects, mentorship, and
-            real-world experience.
+            A ground-breaking initiative that empowers students through collaborative projects,
+            mentorship, and real-world experience.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -43,5 +43,5 @@ export function HeroSection() {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }

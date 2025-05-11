@@ -1,11 +1,14 @@
-"use client"
+'use client';
 
-import { ChatProvider } from "@/contexts/ChatContext"
+import { ChatProvider } from '@/contexts/ChatContext';
+import { AuthProvider } from './auth-provider';
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <ChatProvider>
-      {children}
-    </ChatProvider>
-  )
+    <AuthProvider>
+      <ChatProvider>
+        {children}
+      </ChatProvider>
+    </AuthProvider>
+  );
 }

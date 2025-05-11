@@ -1,13 +1,13 @@
-"use client"
+'use client';
 
-import { useState, useRef, useEffect } from "react"
-import { useChat } from "@/contexts/ChatContext"
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Avatar } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Send } from "lucide-react"
+import { useState, useRef, useEffect } from 'react';
+import { useChat } from '@/contexts/ChatContext';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Avatar } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
+import { Send } from 'lucide-react';
 
 // Helper function to generate unique IDs
 const generateUniqueId = () => {
@@ -15,35 +15,35 @@ const generateUniqueId = () => {
 };
 
 export function ProjectChat({ slug }: { slug: string }) {
-  const { getChat, addMessage } = useChat()
-  const [newMessage, setNewMessage] = useState("")
-  const scrollAreaRef = useRef<HTMLDivElement>(null)
-  const chatMessages = getChat(slug)
+  const { getChat, addMessage } = useChat();
+  const [newMessage, setNewMessage] = useState('');
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const chatMessages = getChat(slug);
 
   useEffect(() => {
     if (scrollAreaRef.current) {
-      const scrollArea = scrollAreaRef.current
-      scrollArea.scrollTop = scrollArea.scrollHeight
+      const scrollArea = scrollAreaRef.current;
+      scrollArea.scrollTop = scrollArea.scrollHeight;
     }
-  }, [chatMessages])
+  }, [chatMessages]);
 
   const handleSendMessage = () => {
-    if (!newMessage.trim()) return
+    if (!newMessage.trim()) return;
 
     const message = {
       id: generateUniqueId(),
       sender: {
-        name: "You",
-        avatar: "/placeholder.svg",
-        role: "student" as const
+        name: 'You',
+        avatar: '/placeholder.svg',
+        role: 'student' as const,
       },
       content: newMessage.trim(),
-      timestamp: new Date().toISOString()
-    }
+      timestamp: new Date().toISOString(),
+    };
 
-    addMessage(slug, message)
-    setNewMessage("")
-  }
+    addMessage(slug, message);
+    setNewMessage('');
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-12rem)] bg-white rounded-lg shadow-sm">
@@ -53,26 +53,24 @@ export function ProjectChat({ slug }: { slug: string }) {
             <div
               key={message.id}
               className={`flex items-start gap-3 ${
-                message.sender.name === "You" ? "flex-row-reverse" : ""
+                message.sender.name === 'You' ? 'flex-row-reverse' : ''
               }`}
             >
               <Avatar>
                 <img src={message.sender.avatar} alt={message.sender.name} />
               </Avatar>
-              <div className={`flex flex-col ${
-                message.sender.name === "You" ? "items-end" : ""
-              }`}>
+              <div className={`flex flex-col ${message.sender.name === 'You' ? 'items-end' : ''}`}>
                 <div className="flex items-center gap-2">
                   <span className="font-medium">{message.sender.name}</span>
                   <Badge variant="secondary" className="capitalize">
                     {message.sender.role}
                   </Badge>
                 </div>
-                <div className={`mt-1 p-3 rounded-lg ${
-                  message.sender.name === "You"
-                    ? "bg-[#6b3e7c] text-white"
-                    : "bg-gray-100"
-                }`}>
+                <div
+                  className={`mt-1 p-3 rounded-lg ${
+                    message.sender.name === 'You' ? 'bg-[#6b3e7c] text-white' : 'bg-gray-100'
+                  }`}
+                >
                   {message.content}
                 </div>
                 <span className="text-xs text-gray-500 mt-1">
@@ -86,8 +84,8 @@ export function ProjectChat({ slug }: { slug: string }) {
       <div className="p-4 border-t">
         <form
           onSubmit={(e) => {
-            e.preventDefault()
-            handleSendMessage()
+            e.preventDefault();
+            handleSendMessage();
           }}
           className="flex gap-2"
         >
@@ -103,5 +101,5 @@ export function ProjectChat({ slug }: { slug: string }) {
         </form>
       </div>
     </div>
-  )
+  );
 }

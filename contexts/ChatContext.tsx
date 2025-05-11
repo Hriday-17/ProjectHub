@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { ChatMessage } from '@/lib/data/chatMessages';
@@ -29,14 +29,14 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
     const handleMessage = (event: MessageEvent) => {
       const { type, slug, data } = event.data;
       if (type === 'ADD_MESSAGE') {
-        setChatData(prev => ({
+        setChatData((prev) => ({
           ...prev,
-          [slug]: [...(prev[slug] || []), data]
+          [slug]: [...(prev[slug] || []), data],
         }));
       } else if (type === 'CLEAR_CHAT') {
-        setChatData(prev => ({
+        setChatData((prev) => ({
           ...prev,
-          [slug]: []
+          [slug]: [],
         }));
       }
     };
@@ -54,27 +54,27 @@ export function ChatProvider({ children }: { children: React.ReactNode }) {
   const getChat = (slug: string) => chatData[slug] || [];
 
   const addMessage = (slug: string, message: ChatMessage) => {
-    setChatData(prev => ({
+    setChatData((prev) => ({
       ...prev,
-      [slug]: [...(prev[slug] || []), message]
+      [slug]: [...(prev[slug] || []), message],
     }));
 
     broadcastChannel?.postMessage({
       type: 'ADD_MESSAGE',
       slug,
-      data: message
+      data: message,
     });
   };
 
   const clearChat = (slug: string) => {
-    setChatData(prev => ({
+    setChatData((prev) => ({
       ...prev,
-      [slug]: []
+      [slug]: [],
     }));
 
     broadcastChannel?.postMessage({
       type: 'CLEAR_CHAT',
-      slug
+      slug,
     });
   };
 

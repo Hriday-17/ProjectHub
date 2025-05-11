@@ -16,21 +16,22 @@ export const chatData: Record<string, ChatMessage[]> = {
       sender: {
         name: 'Dr. Emily Rodriguez',
         avatar: '/placeholder.svg',
-        role: 'mentor'
+        role: 'mentor',
       },
       content: "Welcome everyone! Let's discuss the AI diagnostic model architecture.",
-      timestamp: '2025-05-07T10:00:00Z'
+      timestamp: '2025-05-07T10:00:00Z',
     },
     {
       id: '2',
       sender: {
         name: 'David Kim',
         avatar: '/placeholder.svg',
-        role: 'student'
+        role: 'student',
       },
-      content: "I've been researching different CNN architectures we could use. Should we use ResNet or EfficientNet as our base?",
-      timestamp: '2025-05-07T10:05:00Z'
-    }
+      content:
+        "I've been researching different CNN architectures we could use. Should we use ResNet or EfficientNet as our base?",
+      timestamp: '2025-05-07T10:05:00Z',
+    },
   ],
   'smart-campus': [
     {
@@ -38,21 +39,21 @@ export const chatData: Record<string, ChatMessage[]> = {
       sender: {
         name: 'Alex Turner',
         avatar: '/placeholder.svg',
-        role: 'student'
+        role: 'student',
       },
       content: 'Just pushed the initial IoT sensor code to our repository.',
-      timestamp: '2025-05-07T09:00:00Z'
+      timestamp: '2025-05-07T09:00:00Z',
     },
     {
       id: '2',
       sender: {
         name: 'Sarah Lee',
         avatar: '/placeholder.svg',
-        role: 'student'
+        role: 'student',
       },
       content: "Great! I'll review the code and test it with our hardware setup.",
-      timestamp: '2025-05-07T09:15:00Z'
-    }
+      timestamp: '2025-05-07T09:15:00Z',
+    },
   ],
   'eco-transport': [
     {
@@ -60,10 +61,11 @@ export const chatData: Record<string, ChatMessage[]> = {
       sender: {
         name: 'Prof. James Wilson',
         avatar: '/placeholder.svg',
-        role: 'mentor'
+        role: 'mentor',
       },
-      content: 'The emission tracking algorithm looks promising. Any thoughts on improving accuracy?',
-      timestamp: '2025-05-07T11:00:00Z'
-    }
-  ]
-}
+      content:
+        'The emission tracking algorithm looks promising. Any thoughts on improving accuracy?',
+      timestamp: '2025-05-07T11:00:00Z',
+    },
+  ],
+};

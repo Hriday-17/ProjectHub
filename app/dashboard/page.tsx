@@ -1,8 +1,8 @@
 // Dashboard page showing AI-recommended projects and task tracking
-import { Navbar } from "@/components/navbar"
-import { Dashboard } from "@/components/dashboard"
-import { KanbanBoard } from "@/components/kanban-board"
-import { ChatBox } from "@/components/chat-box"
+import { Navbar } from '@/components/navbar';
+import { Dashboard } from '@/components/dashboard';
+import { KanbanBoard } from '@/components/kanban-board';
+import { ChatBox } from '@/components/chat-box';
 
 export default function DashboardPage() {
   return (
@@ -26,5 +26,5 @@ export default function DashboardPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

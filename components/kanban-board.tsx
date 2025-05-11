@@ -1,34 +1,34 @@
 // Component: Replicates task tracking kanban board
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Button } from "./ui/button"
-import { Plus, MoreHorizontal, Calendar, Trash2, Edit } from "lucide-react"
-import { Badge } from "./ui/badge"
+import { useState } from 'react';
+import { Button } from './ui/button';
+import { Plus, MoreHorizontal, Calendar, Trash2, Edit } from 'lucide-react';
+import { Badge } from './ui/badge';
 
 interface Task {
-  id: string
-  title: string
-  dueDate: string
-  status: "todo" | "in-progress" | "done"
+  id: string;
+  title: string;
+  dueDate: string;
+  status: 'todo' | 'in-progress' | 'done';
 }
 
 // Mock data for tasks
 const initialTasks: Task[] = [
-  { id: "1", title: "Research project requirements", dueDate: "2023-05-15", status: "todo" },
-  { id: "2", title: "Create project proposal", dueDate: "2023-05-20", status: "todo" },
-  { id: "3", title: "Meet with mentor", dueDate: "2023-05-10", status: "in-progress" },
-  { id: "4", title: "Develop prototype", dueDate: "2023-05-25", status: "in-progress" },
-  { id: "5", title: "Submit initial documentation", dueDate: "2023-05-05", status: "done" },
-  { id: "6", title: "Complete literature review", dueDate: "2023-05-08", status: "done" },
-]
+  { id: '1', title: 'Research project requirements', dueDate: '2023-05-15', status: 'todo' },
+  { id: '2', title: 'Create project proposal', dueDate: '2023-05-20', status: 'todo' },
+  { id: '3', title: 'Meet with mentor', dueDate: '2023-05-10', status: 'in-progress' },
+  { id: '4', title: 'Develop prototype', dueDate: '2023-05-25', status: 'in-progress' },
+  { id: '5', title: 'Submit initial documentation', dueDate: '2023-05-05', status: 'done' },
+  { id: '6', title: 'Complete literature review', dueDate: '2023-05-08', status: 'done' },
+];
 
 export function KanbanBoard() {
-  const [tasks, setTasks] = useState<Task[]>(initialTasks)
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  const getTasksByStatus = (status: Task["status"]) => {
-    return tasks.filter((task) => task.status === status)
-  }
+  const getTasksByStatus = (status: Task['status']) => {
+    return tasks.filter((task) => task.status === status);
+  };
 
   return (
     <div className="p-4">
@@ -45,11 +45,11 @@ export function KanbanBoard() {
         <div className="bg-gray-50 rounded-xl p-4">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-700">To Do</h3>
-            <Badge className="bg-gray-200 text-gray-700">{getTasksByStatus("todo").length}</Badge>
+            <Badge className="bg-gray-200 text-gray-700">{getTasksByStatus('todo').length}</Badge>
           </div>
 
           <div className="space-y-3">
-            {getTasksByStatus("todo").map((task) => (
+            {getTasksByStatus('todo').map((task) => (
               <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <h4 className="font-medium">{task.title}</h4>
@@ -66,7 +66,11 @@ export function KanbanBoard() {
                     <Edit className="h-3 w-3 mr-1" />
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm" className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50"
+                  >
                     <Trash2 className="h-3 w-3 mr-1" />
                     Delete
                   </Button>
@@ -80,11 +84,13 @@ export function KanbanBoard() {
         <div className="bg-gray-50 rounded-xl p-4">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-700">In Progress</h3>
-            <Badge className="bg-blue-100 text-blue-700">{getTasksByStatus("in-progress").length}</Badge>
+            <Badge className="bg-blue-100 text-blue-700">
+              {getTasksByStatus('in-progress').length}
+            </Badge>
           </div>
 
           <div className="space-y-3">
-            {getTasksByStatus("in-progress").map((task) => (
+            {getTasksByStatus('in-progress').map((task) => (
               <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <h4 className="font-medium">{task.title}</h4>
@@ -101,7 +107,11 @@ export function KanbanBoard() {
                     <Edit className="h-3 w-3 mr-1" />
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm" className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50"
+                  >
                     <Trash2 className="h-3 w-3 mr-1" />
                     Delete
                   </Button>
@@ -115,11 +125,11 @@ export function KanbanBoard() {
         <div className="bg-gray-50 rounded-xl p-4">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-bold text-gray-700">Done</h3>
-            <Badge className="bg-green-100 text-green-700">{getTasksByStatus("done").length}</Badge>
+            <Badge className="bg-green-100 text-green-700">{getTasksByStatus('done').length}</Badge>
           </div>
 
           <div className="space-y-3">
-            {getTasksByStatus("done").map((task) => (
+            {getTasksByStatus('done').map((task) => (
               <div key={task.id} className="bg-white p-4 rounded-lg shadow-sm">
                 <div className="flex justify-between items-start">
                   <h4 className="font-medium">{task.title}</h4>
@@ -136,7 +146,11 @@ export function KanbanBoard() {
                     <Edit className="h-3 w-3 mr-1" />
                     Edit
                   </Button>
-                  <Button variant="outline" size="sm" className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2 text-red-500 border-red-200 hover:bg-red-50"
+                  >
                     <Trash2 className="h-3 w-3 mr-1" />
                     Delete
                   </Button>
@@ -147,5 +161,5 @@ export function KanbanBoard() {
         </div>
       </div>
     </div>
-  )
+  );
 }

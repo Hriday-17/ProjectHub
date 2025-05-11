@@ -1,24 +1,24 @@
-"use client"
+'use client';
 
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { motion } from "framer-motion"
-import Link from "next/link"
-import { ArrowRight, BookOpen, Users, Code, Brain, Database, Shield, Cloud } from "lucide-react"
-import { useEffect, useState } from "react"
-import { ProjectCard } from "@/components/project-card"
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowRight, BookOpen, Users, Code, Brain, Database, Shield, Cloud } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ProjectCard } from '@/components/project-card';
 
 export default function Home() {
-  const [imgSrc, setImgSrc] = useState("/placeholder.jpg")
-  const [imgLoaded, setImgLoaded] = useState(false)
+  const [imgSrc, setImgSrc] = useState('/placeholder.jpg');
+  const [imgLoaded, setImgLoaded] = useState(false);
 
   const handleImageError = () => {
-    setImgSrc("https://placehold.co/600x400?text=AI+Healthcare+Assistant")
-  }
+    setImgSrc('https://placehold.co/600x400?text=AI+Healthcare+Assistant');
+  };
 
   const handleImageLoad = () => {
-    setImgLoaded(true)
-  }
+    setImgLoaded(true);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -43,7 +43,8 @@ export default function Home() {
               transition={{ duration: 0.3, delay: 0.1 }}
             >
               <p>
-                "A student-powered ecosystem to connect, collaborate, and launch real projects in technology and innovation — bridging education with global opportunity."
+                "A student-powered ecosystem to connect, collaborate, and launch real projects in
+                technology and innovation — bridging education with global opportunity."
               </p>
             </motion.div>
             <motion.p
@@ -52,14 +53,18 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.2 }}
             >
-              Empowering students through transformative education and research in cutting-edge technology fields
+              Empowering students through transformative education and research in cutting-edge
+              technology fields
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.2 }}
             >
-              <Button asChild className="bg-[#6b3e7c] hover:bg-[#5a2e6b] text-white px-8 py-6 text-lg rounded-lg">
+              <Button
+                asChild
+                className="bg-[#6b3e7c] hover:bg-[#5a2e6b] text-white px-8 py-6 text-lg rounded-lg"
+              >
                 <Link href="/discover-projects">Discover Project Ideas</Link>
               </Button>
             </motion.div>
@@ -99,7 +104,8 @@ export default function Home() {
             >
               <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">Community-Based Projects</h3>
               <p className="text-gray-600">
-                Join exciting student-led initiatives and collaborate with peers on innovative solutions
+                Join exciting student-led initiatives and collaborate with peers on innovative
+                solutions
               </p>
             </motion.div>
 
@@ -158,7 +164,7 @@ export default function Home() {
                 description="Build a dashboard to display public and student-generated data."
               />
             </motion.div>
-            
+
             <motion.div
               className="text-center mt-6"
               initial={{ opacity: 0 }}
@@ -179,7 +185,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.5 }}
             >
-              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">Mentor-Based Research Projects</h3>
+              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">
+                Mentor-Based Research Projects
+              </h3>
               <p className="text-gray-600">
                 Engage in cutting-edge research projects under the guidance of experienced mentors
               </p>
@@ -297,11 +305,14 @@ export default function Home() {
               <span className="inline-block bg-[#6b3e7c] text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
                 Artificial Intelligence
               </span>
-              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">AI-Powered Healthcare Assistant</h3>
+              <h3 className="text-2xl font-bold mb-4 text-[#1e3a3a]">
+                AI-Powered Healthcare Assistant
+              </h3>
               <p className="text-gray-600 mb-6">
-                This innovative project combines natural language processing and machine learning to create an AI
-                assistant that helps patients manage medications, schedule appointments, and access health information.
-                Students will work with healthcare professionals to ensure the solution meets real-world needs.
+                This innovative project combines natural language processing and machine learning to
+                create an AI assistant that helps patients manage medications, schedule
+                appointments, and access health information. Students will work with healthcare
+                professionals to ensure the solution meets real-world needs.
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="bg-gray-200 px-3 py-1 rounded-full text-sm">Machine Learning</span>
@@ -338,13 +349,14 @@ export default function Home() {
             <div className="lg:col-span-1 bg-[#1e3a3a] text-white p-8 rounded-xl">
               <h3 className="text-2xl font-bold mb-6">Computer Science & AI</h3>
               <p className="mb-6">
-                Computer Science and AI are fields that solve some of the most impactful problems the world faces today.
-                At ProjectHub, we connect students with real-world projects that require logical thinking and creative
-                problem-solving.
+                Computer Science and AI are fields that solve some of the most impactful problems
+                the world faces today. At ProjectHub, we connect students with real-world projects
+                that require logical thinking and creative problem-solving.
               </p>
               <p>
-                We partner with industry leaders to provide our students world-class learning and experiential
-                facilities to develop practical skills and knowledge sought-after in global tech markets.
+                We partner with industry leaders to provide our students world-class learning and
+                experiential facilities to develop practical skills and knowledge sought-after in
+                global tech markets.
               </p>
             </div>
 
@@ -364,8 +376,8 @@ export default function Home() {
                     <h4 className="text-xl font-bold">BSc Computer Science</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Learn fundamental programming concepts, algorithms, data structures, and software engineering
-                    principles to build robust applications.
+                    Learn fundamental programming concepts, algorithms, data structures, and
+                    software engineering principles to build robust applications.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#6b3e7c]">
                     <Link href="/projects?program=bsc-computer-science">
@@ -388,8 +400,8 @@ export default function Home() {
                     <h4 className="text-xl font-bold">BSc Artificial Intelligence</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Specialize in machine learning, neural networks, computer vision, and natural language processing to
-                    build intelligent systems.
+                    Specialize in machine learning, neural networks, computer vision, and natural
+                    language processing to build intelligent systems.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#6b3e7c]">
                     <Link href="/projects?program=bsc-artificial-intelligence">
@@ -412,8 +424,8 @@ export default function Home() {
                     <h4 className="text-xl font-bold">BSc Data Science</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Master data analysis, statistical modeling, and visualization techniques to extract insights from
-                    complex datasets.
+                    Master data analysis, statistical modeling, and visualization techniques to
+                    extract insights from complex datasets.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#6b3e7c]">
                     <Link href="/projects?program=bsc-data-science">
@@ -436,7 +448,8 @@ export default function Home() {
                     <h4 className="text-xl font-bold">BSc Cybersecurity</h4>
                   </div>
                   <p className="text-gray-600 mb-4">
-                    Develop expertise in network security, ethical hacking, cryptography, and security risk management.
+                    Develop expertise in network security, ethical hacking, cryptography, and
+                    security risk management.
                   </p>
                   <Button asChild variant="link" className="p-0 text-[#6b3e7c]">
                     <Link href="/projects?program=bsc-cybersecurity">
@@ -466,21 +479,21 @@ export default function Home() {
             {[
               {
                 icon: <BookOpen className="h-10 w-10" />,
-                title: "Project-Based Learning",
+                title: 'Project-Based Learning',
                 description:
-                  "Learn by doing with real-world projects that build your portfolio and prepare you for industry challenges.",
+                  'Learn by doing with real-world projects that build your portfolio and prepare you for industry challenges.',
               },
               {
                 icon: <Users className="h-10 w-10" />,
-                title: "Expert Mentorship",
+                title: 'Expert Mentorship',
                 description:
-                  "Get guidance from industry professionals and academic experts who are leaders in their fields.",
+                  'Get guidance from industry professionals and academic experts who are leaders in their fields.',
               },
               {
                 icon: <Code className="h-10 w-10" />,
-                title: "Cutting-Edge Technology",
+                title: 'Cutting-Edge Technology',
                 description:
-                  "Work with the latest tools and technologies used in the industry to stay ahead of the curve.",
+                  'Work with the latest tools and technologies used in the industry to stay ahead of the curve.',
               },
             ].map((feature, index) => (
               <motion.div
@@ -515,7 +528,9 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-4">ProjectHub</h3>
-              <p className="text-gray-600">Empowering students through transformational education and research.</p>
+              <p className="text-gray-600">
+                Empowering students through transformational education and research.
+              </p>
             </div>
             <div>
               <h3 className="font-bold text-lg mb-4">Quick Links</h3>
@@ -599,5 +614,5 @@ export default function Home() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

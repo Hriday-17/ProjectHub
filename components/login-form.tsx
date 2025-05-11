@@ -1,29 +1,71 @@
 // Component: Replicates user authentication login form
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
-import { Label } from "./ui/label"
-import { Checkbox } from "./ui/checkbox"
-import Link from "next/link"
-import { Github } from "lucide-react"
+import { useState } from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Checkbox } from './ui/checkbox';
+import Link from 'next/link';
+import { Github } from 'lucide-react';
 
 export function LoginForm() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false)
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [rememberMe, setRememberMe] = useState(false);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // In a real app, this would authenticate with an API
-    console.log("Login submitted:", { email, password, rememberMe })
+  const validateEmailDomain = (email: string) => {
+    return email.endsWith('@mahindrauniversity.edu.in');
+  };
 
-    // Redirect to dashboard (simulated)
-    window.location.href = "/dashboard"
-  }
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    if (!validateEmailDomain(email)) {
+      setError('Only @mahindrauniversity.edu.in email addresses are allowed');
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password, rememberMe }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Successful login - redirect to dashboard
+        window.location.replace('/dashboard');
+      } else {
+        // Handle specific error cases
+        switch (data.error?.code) {
+          case 'auth/invalid-credentials':
+            setError('Invalid email or password');
+            break;
+          case 'auth/email-not-verified':
+            setError('Please verify your email address before logging in');
+            break;
+          default:
+            setError(data.error?.message || 'An error occurred during login');
+        }
+      }
+    } catch (error) {
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="mx-auto max-w-md space-y-6 p-6 bg-white rounded-xl shadow-sm">
@@ -33,15 +75,22 @@ export function LoginForm() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div aria-live="polite" className="text-sm text-red-500" role="alert">
+          {error}
+        </div>
+
         <div className="space-y-2">
           <Label htmlFor="email">University Email</Label>
           <Input
             id="email"
             type="email"
-            placeholder="your.name@university.edu"
+            placeholder="your.name@mahindrauniversity.edu.in"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            pattern="[a-z0-9._%+-]+@mahindrauniversity\.edu\.in$"
+            title="Please use your Mahindra University email address"
+            aria-invalid={error ? 'true' : 'false'}
           />
         </div>
 
@@ -59,6 +108,8 @@ export function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            minLength={8}
+            aria-invalid={error ? 'true' : 'false'}
           />
         </div>
 
@@ -73,8 +124,12 @@ export function LoginForm() {
           </Label>
         </div>
 
-        <Button type="submit" className="w-full bg-[#6b3e7c] hover:bg-[#5a2e6b]">
-          Sign In
+        <Button 
+          type="submit" 
+          className="w-full bg-[#6b3e7c] hover:bg-[#5a2e6b]"
+          disabled={loading}
+        >
+          {loading ? 'Signing in...' : 'Sign In'}
         </Button>
       </form>
 
@@ -93,11 +148,11 @@ export function LoginForm() {
       </Button>
 
       <p className="text-center text-sm text-gray-500">
-        Don't have an account?{" "}
+        Don't have an account?{' '}
         <Link href="/signup" className="text-[#6b3e7c] hover:underline">
           Sign up
         </Link>
       </p>
     </div>
-  )
+  );
 }

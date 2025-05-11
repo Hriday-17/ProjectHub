@@ -1,73 +1,75 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
-import { Select } from "@/components/ui/select"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { motion } from "framer-motion"
-import { Avatar } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import { useState } from 'react';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Select } from '@/components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { motion } from 'framer-motion';
+import { Avatar } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 export default function AccountPage() {
   // Mock user data
   const userData = {
-    name: "John Doe",
-    email: "john.doe@university.edu",
-    role: "student",
-    department: "Computer Science",
-    skills: ["React", "JavaScript", "Machine Learning", "Python"],
-    bio: "Computer Science student with a passion for AI and web development. Looking to collaborate on innovative projects.",
-    github: "https://github.com/johndoe",
-    linkedin: "https://linkedin.com/in/johndoe",
+    name: 'John Doe',
+    email: 'john.doe@university.edu',
+    role: 'student',
+    department: 'Computer Science',
+    skills: ['React', 'JavaScript', 'Machine Learning', 'Python'],
+    bio: 'Computer Science student with a passion for AI and web development. Looking to collaborate on innovative projects.',
+    github: 'https://github.com/johndoe',
+    linkedin: 'https://linkedin.com/in/johndoe',
     projects: [
       {
-        id: "1",
-        title: "AI-Powered Healthcare Assistant",
-        status: "In Progress",
-        role: "Team Lead",
+        id: '1',
+        title: 'AI-Powered Healthcare Assistant',
+        status: 'In Progress',
+        role: 'Team Lead',
       },
       {
-        id: "2",
-        title: "Machine Learning for Stock Prediction",
-        status: "Completed",
-        role: "Developer",
+        id: '2',
+        title: 'Machine Learning for Stock Prediction',
+        status: 'Completed',
+        role: 'Developer',
       },
     ],
     certificates: [
       {
-        id: "1",
-        title: "Machine Learning Specialization",
-        issuer: "Coursera",
-        date: "2023-01-15",
+        id: '1',
+        title: 'Machine Learning Specialization',
+        issuer: 'Coursera',
+        date: '2023-01-15',
       },
       {
-        id: "2",
-        title: "Full Stack Web Development",
-        issuer: "Udemy",
-        date: "2022-08-10",
+        id: '2',
+        title: 'Full Stack Web Development',
+        issuer: 'Udemy',
+        date: '2022-08-10',
       },
     ],
-  }
+  };
 
-  const [formData, setFormData] = useState(userData)
+  const [formData, setFormData] = useState(userData);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // In a real app, this would submit to an API
-    console.log("Form submitted:", formData)
-    alert("Profile updated successfully!")
-  }
+    console.log('Form submitted:', formData);
+    alert('Profile updated successfully!');
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -109,16 +111,28 @@ export default function AccountPage() {
               <div className="bg-white rounded-xl shadow-sm overflow-hidden">
                 <Tabs defaultValue="profile">
                   <TabsList className="bg-gray-100 p-0 h-14">
-                    <TabsTrigger value="profile" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                    <TabsTrigger
+                      value="profile"
+                      className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                    >
                       Profile Information
                     </TabsTrigger>
-                    <TabsTrigger value="projects" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                    <TabsTrigger
+                      value="projects"
+                      className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                    >
                       My Projects
                     </TabsTrigger>
-                    <TabsTrigger value="certificates" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                    <TabsTrigger
+                      value="certificates"
+                      className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                    >
                       Certificates
                     </TabsTrigger>
-                    <TabsTrigger value="settings" className="h-14 px-8 data-[state=active]:bg-white rounded-none">
+                    <TabsTrigger
+                      value="settings"
+                      className="h-14 px-8 data-[state=active]:bg-white rounded-none"
+                    >
                       Settings
                     </TabsTrigger>
                   </TabsList>
@@ -128,7 +142,13 @@ export default function AccountPage() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
                           <Label htmlFor="name">Full Name</Label>
-                          <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
+                          <Input
+                            id="name"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            required
+                          />
                         </div>
 
                         <div className="space-y-2">
@@ -145,7 +165,13 @@ export default function AccountPage() {
 
                         <div className="space-y-2">
                           <Label htmlFor="role">Role</Label>
-                          <Select id="role" name="role" value={formData.role} onChange={handleChange} required>
+                          <Select
+                            id="role"
+                            name="role"
+                            value={formData.role}
+                            onChange={handleChange}
+                            required
+                          >
                             <option value="student">Student</option>
                             <option value="mentor">Mentor</option>
                             <option value="admin">Administrator</option>
@@ -176,9 +202,12 @@ export default function AccountPage() {
                         <Input
                           id="skills"
                           name="skills"
-                          value={formData.skills.join(", ")}
+                          value={formData.skills.join(', ')}
                           onChange={(e) =>
-                            setFormData((prev) => ({ ...prev, skills: e.target.value.split(",").map((s) => s.trim()) }))
+                            setFormData((prev) => ({
+                              ...prev,
+                              skills: e.target.value.split(',').map((s) => s.trim()),
+                            }))
                           }
                           placeholder="React, JavaScript, Machine Learning, Python"
                         />
@@ -248,9 +277,9 @@ export default function AccountPage() {
                             </div>
                             <Badge
                               className={
-                                project.status === "Completed"
-                                  ? "bg-green-100 text-green-800"
-                                  : "bg-blue-100 text-blue-800"
+                                project.status === 'Completed'
+                                  ? 'bg-green-100 text-green-800'
+                                  : 'bg-blue-100 text-blue-800'
                               }
                             >
                               {project.status}
@@ -269,7 +298,9 @@ export default function AccountPage() {
                     </div>
 
                     <div className="mt-6">
-                      <Button className="bg-[#6b3e7c] hover:bg-[#5a2e6b]">Browse New Projects</Button>
+                      <Button className="bg-[#6b3e7c] hover:bg-[#5a2e6b]">
+                        Browse New Projects
+                      </Button>
                     </div>
                   </TabsContent>
 
@@ -299,7 +330,9 @@ export default function AccountPage() {
                     </div>
 
                     <div className="mt-6">
-                      <Button className="bg-[#6b3e7c] hover:bg-[#5a2e6b]">Upload New Certificate</Button>
+                      <Button className="bg-[#6b3e7c] hover:bg-[#5a2e6b]">
+                        Upload New Certificate
+                      </Button>
                     </div>
                   </TabsContent>
 
@@ -309,7 +342,12 @@ export default function AccountPage() {
                     <div className="space-y-6">
                       <div className="space-y-2">
                         <Label htmlFor="password">Change Password</Label>
-                        <Input id="password" name="password" type="password" placeholder="Enter new password" />
+                        <Input
+                          id="password"
+                          name="password"
+                          type="password"
+                          placeholder="Enter new password"
+                        />
                       </div>
 
                       <div className="space-y-2">
@@ -365,5 +403,5 @@ export default function AccountPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

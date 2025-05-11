@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
@@ -12,15 +12,12 @@ export async function GET() {
     // })
 
     // For now, return from localStorage
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      forums: [] // Will be replaced with database query
-    })
+      forums: [], // Will be replaced with database query
+    });
   } catch (error) {
-    console.error('Failed to fetch forums:', error)
-    return NextResponse.json(
-      { error: 'Failed to fetch forums' },
-      { status: 500 }
-    )
+    console.error('Failed to fetch forums:', error);
+    return NextResponse.json({ error: 'Failed to fetch forums' }, { status: 500 });
   }
 }

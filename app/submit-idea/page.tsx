@@ -1,79 +1,79 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from 'react';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
-import { Badge } from "@/components/ui/badge"
-import { X } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
+} from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { X } from 'lucide-react';
+import { useToast } from '@/components/ui/use-toast';
 
 interface FormData {
-  title: string
-  description: string
-  category: string
-  skillLevel: string
-  tags: string[]
+  title: string;
+  description: string;
+  category: string;
+  skillLevel: string;
+  tags: string[];
 }
 
 export default function SubmitIdeaPage() {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const [formData, setFormData] = useState<FormData>({
-    title: "",
-    description: "",
-    category: "",
-    skillLevel: "",
-    tags: []
-  })
-  const [tagInput, setTagInput] = useState("")
+    title: '',
+    description: '',
+    category: '',
+    skillLevel: '',
+    tags: [],
+  });
+  const [tagInput, setTagInput] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // Mock submission - would normally go to a backend API
-    console.log("Submitted idea:", formData)
+    console.log('Submitted idea:', formData);
     toast({
-      title: "Success!",
-      description: "Your idea has been sent to our team for review.",
+      title: 'Success!',
+      description: 'Your idea has been sent to our team for review.',
       duration: 5000,
-    })
+    });
     // Reset form
     setFormData({
-      title: "",
-      description: "",
-      category: "",
-      skillLevel: "",
-      tags: []
-    })
-  }
+      title: '',
+      description: '',
+      category: '',
+      skillLevel: '',
+      tags: [],
+    });
+  };
 
   const handleTagInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' || e.key === ',') {
-      e.preventDefault()
-      const newTag = tagInput.trim()
+      e.preventDefault();
+      const newTag = tagInput.trim();
       if (newTag && !formData.tags.includes(newTag)) {
-        setFormData(prev => ({
+        setFormData((prev) => ({
           ...prev,
-          tags: [...prev.tags, newTag]
-        }))
+          tags: [...prev.tags, newTag],
+        }));
       }
-      setTagInput("")
+      setTagInput('');
     }
-  }
+  };
 
   const removeTag = (tagToRemove: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }))
-  }
+      tags: prev.tags.filter((tag) => tag !== tagToRemove),
+    }));
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -97,7 +97,7 @@ export default function SubmitIdeaPage() {
                 <Input
                   id="title"
                   value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, title: e.target.value }))}
                   placeholder="Enter a descriptive title for your project idea"
                   required
                 />
@@ -110,7 +110,9 @@ export default function SubmitIdeaPage() {
                 <Textarea
                   id="description"
                   value={formData.description}
-                  onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                  onChange={(e) =>
+                    setFormData((prev) => ({ ...prev, description: e.target.value }))
+                  }
                   placeholder="Describe your project idea in detail"
                   className="min-h-[120px]"
                   required
@@ -124,7 +126,7 @@ export default function SubmitIdeaPage() {
                 <Input
                   id="category"
                   value={formData.category}
-                  onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value }))}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, category: e.target.value }))}
                   placeholder="e.g. AI, Web Development, Mobile Apps"
                   required
                 />
@@ -136,7 +138,7 @@ export default function SubmitIdeaPage() {
                 </label>
                 <Select
                   value={formData.skillLevel}
-                  onValueChange={(value) => setFormData(prev => ({ ...prev, skillLevel: value }))}
+                  onValueChange={(value) => setFormData((prev) => ({ ...prev, skillLevel: value }))}
                   required
                 >
                   <SelectTrigger>
@@ -184,12 +186,10 @@ export default function SubmitIdeaPage() {
 
               <div className="pt-4">
                 <p className="text-sm text-gray-500 mb-4">
-                  All submitted ideas will be reviewed by our team before going live on the Projects page.
+                  All submitted ideas will be reviewed by our team before going live on the Projects
+                  page.
                 </p>
-                <Button
-                  type="submit"
-                  className="w-full bg-[#6b3e7c] hover:bg-[#5a2e6b] text-white"
-                >
+                <Button type="submit" className="w-full bg-[#6b3e7c] hover:bg-[#5a2e6b] text-white">
                   Submit Idea for Review
                 </Button>
               </div>
@@ -198,5 +198,5 @@ export default function SubmitIdeaPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

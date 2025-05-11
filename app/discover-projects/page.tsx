@@ -1,84 +1,92 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { motion } from "framer-motion"
-import Link from "next/link"
+import { useState } from 'react';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 // Mock trending project ideas
 const trendingProjects = [
   {
     id: 1,
-    title: "AI-Powered Music Recommendation System",
-    description: "Create a smart music recommendation system using machine learning to suggest songs based on mood and preferences.",
-    tags: ["AI", "Music", "Machine Learning"],
-    gradient: "from-pink-600 to-purple-600"
+    title: 'AI-Powered Music Recommendation System',
+    description:
+      'Create a smart music recommendation system using machine learning to suggest songs based on mood and preferences.',
+    tags: ['AI', 'Music', 'Machine Learning'],
+    gradient: 'from-pink-600 to-purple-600',
   },
   {
     id: 2,
-    title: "Eco-Friendly Transportation Tracker",
-    description: "Develop a mobile app to track and reward sustainable transportation choices on campus.",
-    tags: ["Mobile", "Sustainability", "GPS"],
-    gradient: "from-green-500 to-emerald-600"
+    title: 'Eco-Friendly Transportation Tracker',
+    description:
+      'Develop a mobile app to track and reward sustainable transportation choices on campus.',
+    tags: ['Mobile', 'Sustainability', 'GPS'],
+    gradient: 'from-green-500 to-emerald-600',
   },
   {
     id: 3,
-    title: "Virtual Lab Simulator",
-    description: "Build a VR-based science lab simulator for conducting virtual experiments safely.",
-    tags: ["VR", "Education", "3D"],
-    gradient: "from-blue-600 to-cyan-500"
+    title: 'Virtual Lab Simulator',
+    description:
+      'Build a VR-based science lab simulator for conducting virtual experiments safely.',
+    tags: ['VR', 'Education', '3D'],
+    gradient: 'from-blue-600 to-cyan-500',
   },
   {
     id: 4,
-    title: "Smart Study Group Matcher",
-    description: "Create an AI-powered platform that matches students with study groups based on learning styles and schedules.",
-    tags: ["Web", "AI", "Social"],
-    gradient: "from-orange-500 to-red-500"
+    title: 'Smart Study Group Matcher',
+    description:
+      'Create an AI-powered platform that matches students with study groups based on learning styles and schedules.',
+    tags: ['Web', 'AI', 'Social'],
+    gradient: 'from-orange-500 to-red-500',
   },
   {
     id: 5,
-    title: "Campus Food Waste Reducer",
-    description: "Design an IoT solution to track and minimize food waste in campus cafeterias.",
-    tags: ["IoT", "Sustainability", "Data"],
-    gradient: "from-yellow-500 to-orange-600"
+    title: 'Campus Food Waste Reducer',
+    description: 'Design an IoT solution to track and minimize food waste in campus cafeterias.',
+    tags: ['IoT', 'Sustainability', 'Data'],
+    gradient: 'from-yellow-500 to-orange-600',
   },
   {
     id: 6,
-    title: "Accessible Learning Tools",
-    description: "Develop assistive technology tools to make online learning more accessible for students with disabilities.",
-    tags: ["Accessibility", "Education", "UI/UX"],
-    gradient: "from-indigo-600 to-blue-700"
-  }
-]
+    title: 'Accessible Learning Tools',
+    description:
+      'Develop assistive technology tools to make online learning more accessible for students with disabilities.',
+    tags: ['Accessibility', 'Education', 'UI/UX'],
+    gradient: 'from-indigo-600 to-blue-700',
+  },
+];
 
 export default function DiscoverProjectsPage() {
-  const [prompt, setPrompt] = useState("")
-  const [generatedIdeas, setGeneratedIdeas] = useState<Array<{
-    title: string;
-    description: string;
-    tags: string[];
-  }>>([])
+  const [prompt, setPrompt] = useState('');
+  const [generatedIdeas, setGeneratedIdeas] = useState<
+    Array<{
+      title: string;
+      description: string;
+      tags: string[];
+    }>
+  >([]);
 
   const handleGenerateIdea = () => {
     // Mock AI generation - in reality, this would call an API
     const mockIdeas = [
       {
-        title: "Health Data Analytics Dashboard",
-        description: "Create a beginner-friendly dashboard that visualizes health trends using machine learning.",
-        tags: ["AI", "Healthcare", "Data Visualization"],
+        title: 'Health Data Analytics Dashboard',
+        description:
+          'Create a beginner-friendly dashboard that visualizes health trends using machine learning.',
+        tags: ['AI', 'Healthcare', 'Data Visualization'],
       },
       {
-        title: "Medical Appointment Scheduler",
-        description: "Build an AI-powered system to optimize hospital appointment scheduling.",
-        tags: ["Healthcare", "AI", "Scheduling"],
+        title: 'Medical Appointment Scheduler',
+        description: 'Build an AI-powered system to optimize hospital appointment scheduling.',
+        tags: ['Healthcare', 'AI', 'Scheduling'],
       },
-    ]
-    setGeneratedIdeas(mockIdeas)
-  }
+    ];
+    setGeneratedIdeas(mockIdeas);
+  };
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
@@ -110,15 +118,14 @@ export default function DiscoverProjectsPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <Card className={`h-full p-5 bg-gradient-to-br ${project.gradient} text-white rounded-lg shadow-md hover:shadow-lg transition-shadow`}>
+                  <Card
+                    className={`h-full p-5 bg-gradient-to-br ${project.gradient} text-white rounded-lg shadow-md hover:shadow-lg transition-shadow`}
+                  >
                     <h3 className="text-xl font-bold mb-3">{project.title}</h3>
                     <p className="mb-4 text-white/90">{project.description}</p>
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag) => (
-                        <Badge
-                          key={tag}
-                          className="bg-white/20 hover:bg-white/30 text-white"
-                        >
+                        <Badge key={tag} className="bg-white/20 hover:bg-white/30 text-white">
                           {tag}
                         </Badge>
                       ))}
@@ -132,7 +139,9 @@ export default function DiscoverProjectsPage() {
           {/* AI Idea Generator Section */}
           <section className="max-w-3xl mx-auto">
             <div className="text-center mb-8">
-              <h2 className="text-2xl font-bold text-[#1e3a3a] mb-3">Need a Custom Project Idea?</h2>
+              <h2 className="text-2xl font-bold text-[#1e3a3a] mb-3">
+                Need a Custom Project Idea?
+              </h2>
               <p className="text-gray-600">
                 Use our AI assistant to generate fresh ideas tailored to your prompt.
               </p>
@@ -169,10 +178,7 @@ export default function DiscoverProjectsPage() {
                         <p className="mb-3 text-white/90">{idea.description}</p>
                         <div className="flex flex-wrap gap-2">
                           {idea.tags.map((tag) => (
-                            <Badge
-                              key={tag}
-                              className="bg-white/20 hover:bg-white/30 text-white"
-                            >
+                            <Badge key={tag} className="bg-white/20 hover:bg-white/30 text-white">
                               {tag}
                             </Badge>
                           ))}
@@ -187,5 +193,5 @@ export default function DiscoverProjectsPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

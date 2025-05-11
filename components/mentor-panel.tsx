@@ -1,43 +1,43 @@
-"use client"
+'use client';
 
-import { Badge } from "./ui/badge"
-import { Button } from "./ui/button"
-import { Avatar } from "./ui/avatar"
-import { Card, CardHeader, CardContent } from "./ui/card"
-import { CheckCircle, XCircle, Clock } from "lucide-react"
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { Avatar } from './ui/avatar';
+import { Card, CardHeader, CardContent } from './ui/card';
+import { CheckCircle, XCircle, Clock } from 'lucide-react';
 
 interface MentorPanelProps {
   mentor: {
-    name: string
-    title?: string
-    department: string
-    avatar: string
-    status: "Pending" | "Under Review" | "Approved"
-  }
+    name: string;
+    title?: string;
+    department: string;
+    avatar: string;
+    status: 'Pending' | 'Under Review' | 'Approved';
+  };
 }
 
 export function MentorPanel({ mentor }: MentorPanelProps) {
   const statusConfig = {
-    "Pending": {
+    Pending: {
       icon: Clock,
-      text: "Pending Approval",
-      color: "bg-yellow-100 text-yellow-800",
+      text: 'Pending Approval',
+      color: 'bg-yellow-100 text-yellow-800',
     },
-    "Approved": {
+    Approved: {
       icon: CheckCircle,
-      text: "Approved",
-      color: "bg-green-100 text-green-800",
+      text: 'Approved',
+      color: 'bg-green-100 text-green-800',
     },
-    "Under Review": {
+    'Under Review': {
       icon: Clock,
-      text: "Under Review",
-      color: "bg-blue-100 text-blue-800",
-    }
-  }
+      text: 'Under Review',
+      color: 'bg-blue-100 text-blue-800',
+    },
+  };
 
   // Default to Pending if status is not recognized
-  const status = mentor.status || "Pending";
-  const currentStatus = statusConfig[status] || statusConfig["Pending"];
+  const status = mentor.status || 'Pending';
+  const currentStatus = statusConfig[status] || statusConfig['Pending'];
   const StatusIcon = currentStatus.icon;
 
   return (
@@ -48,7 +48,7 @@ export function MentorPanel({ mentor }: MentorPanelProps) {
       <CardContent>
         <div className="flex items-center gap-4 mb-6">
           <Avatar className="h-16 w-16">
-            <img src={mentor.avatar || "/placeholder.svg"} alt={mentor.name} />
+            <img src={mentor.avatar || '/placeholder.svg'} alt={mentor.name} />
           </Avatar>
           <div>
             <h3 className="text-lg font-bold">{mentor.name}</h3>
@@ -65,11 +65,11 @@ export function MentorPanel({ mentor }: MentorPanelProps) {
           <Button variant="outline" className="flex-1">
             Contact Mentor
           </Button>
-          {status === "Under Review" && (
+          {status === 'Under Review' && (
             <Button className="flex-1 bg-[#6b3e7c] hover:bg-[#5a2e6b]">Request Update</Button>
           )}
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

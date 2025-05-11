@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server'
-import type { Forum } from '@/lib/data/forums'
+import { NextResponse } from 'next/server';
+import type { Forum } from '@/lib/data/forums';
 
 export async function POST(request: Request) {
   try {
-    const forum: Forum = await request.json()
-    
+    const forum: Forum = await request.json();
+
     // TODO: Save forum to database
     // Example with Prisma:
     // const savedForum = await prisma.forum.create({
@@ -19,12 +19,9 @@ export async function POST(request: Request) {
     //   }
     // })
 
-    return NextResponse.json({ success: true, forum })
+    return NextResponse.json({ success: true, forum });
   } catch (error) {
-    console.error('Failed to create forum:', error)
-    return NextResponse.json(
-      { error: 'Failed to create forum' },
-      { status: 500 }
-    )
+    console.error('Failed to create forum:', error);
+    return NextResponse.json({ error: 'Failed to create forum' }, { status: 500 });
   }
 }

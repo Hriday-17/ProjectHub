@@ -1,60 +1,69 @@
 // Component: Replicates profile & settings form
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Button } from "./ui/button"
-import { Input } from "./ui/input"
-import { Textarea } from "./ui/textarea"
-import { Label } from "./ui/label"
-import { Select } from "./ui/select"
+import { useState } from 'react';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+import { Textarea } from './ui/textarea';
+import { Label } from './ui/label';
+import { Select } from './ui/select';
 
 interface ProfileFormProps {
   initialData?: {
-    name: string
-    email: string
-    role: string
-    department: string
-    skills: string[]
-    bio: string
-    github: string
-    linkedin: string
-  }
+    name: string;
+    email: string;
+    role: string;
+    department: string;
+    skills: string[];
+    bio: string;
+    github: string;
+    linkedin: string;
+  };
 }
 
 export function ProfileForm({ initialData }: ProfileFormProps) {
   const [formData, setFormData] = useState(
     initialData || {
-      name: "",
-      email: "",
-      role: "student",
-      department: "",
+      name: '',
+      email: '',
+      role: 'student',
+      department: '',
       skills: [],
-      bio: "",
-      github: "",
-      linkedin: "",
-    },
-  )
+      bio: '',
+      github: '',
+      linkedin: '',
+    }
+  );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // In a real app, this would submit to an API
-    console.log("Form submitted:", formData)
-    alert("Profile updated successfully!")
-  }
+    console.log('Form submitted:', formData);
+    alert('Profile updated successfully!');
+  };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
           <Label htmlFor="name">Full Name</Label>
-          <Input id="name" name="name" value={formData.name} onChange={handleChange} placeholder="John Doe" required />
+          <Input
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="John Doe"
+            required
+          />
         </div>
 
         <div className="space-y-2">
@@ -81,7 +90,13 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
 
         <div className="space-y-2">
           <Label htmlFor="department">Department</Label>
-          <Select id="department" name="department" value={formData.department} onChange={handleChange} required>
+          <Select
+            id="department"
+            name="department"
+            value={formData.department}
+            onChange={handleChange}
+            required
+          >
             <option value="">Select Department</option>
             <option value="engineering">Engineering & Computer Science</option>
             <option value="business">Business</option>
@@ -98,8 +113,13 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         <Input
           id="skills"
           name="skills"
-          value={formData.skills.join(", ")}
-          onChange={(e) => setFormData((prev) => ({ ...prev, skills: e.target.value.split(",").map((s) => s.trim()) }))}
+          value={formData.skills.join(', ')}
+          onChange={(e) =>
+            setFormData((prev) => ({
+              ...prev,
+              skills: e.target.value.split(',').map((s) => s.trim()),
+            }))
+          }
           placeholder="React, JavaScript, UI/UX Design"
         />
       </div>
@@ -142,7 +162,12 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
 
       <div className="space-y-2">
         <Label htmlFor="password">Change Password</Label>
-        <Input id="password" name="password" type="password" placeholder="Leave blank to keep current password" />
+        <Input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="Leave blank to keep current password"
+        />
       </div>
 
       <div className="flex justify-end gap-4">
@@ -154,5 +179,5 @@ export function ProfileForm({ initialData }: ProfileFormProps) {
         </Button>
       </div>
     </form>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 // Login page for user authentication
-import { Navbar } from "@/components/navbar"
-import { LoginForm } from "@/components/login-form"
+import { Navbar } from '@/components/navbar';
+import { LoginForm } from '@/components/login-form';
 
 export default function LoginPage() {
   return (
@@ -11,5 +11,5 @@ export default function LoginPage() {
         <LoginForm />
       </main>
     </div>
-  )
+  );
 }

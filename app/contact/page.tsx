@@ -1,41 +1,43 @@
-"use client"
+'use client';
 
-import type React from "react"
+import type React from 'react';
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Select } from "@/components/ui/select"
-import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send, CheckCircle } from "lucide-react"
+import { useState } from 'react';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Select } from '@/components/ui/select';
+import { motion } from 'framer-motion';
+import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  })
+    name: '',
+    email: '',
+    subject: '',
+    message: '',
+  });
 
-  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
-  }
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // In a real app, this would submit to an API
-    console.log("Form submitted:", formData)
+    console.log('Form submitted:', formData);
 
     // Simulate form submission
     setTimeout(() => {
-      setIsSubmitted(true)
-    }, 1000)
-  }
+      setIsSubmitted(true);
+    }, 1000);
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -60,8 +62,8 @@ export default function ContactPage() {
             >
               <h2 className="text-2xl font-bold mb-6 text-[#6b3e7c]">Get in Touch</h2>
               <p className="text-gray-600 mb-8">
-                Have questions about ProjectHub or need assistance? We're here to help! Fill out the form and our team
-                will get back to you as soon as possible.
+                Have questions about ProjectHub or need assistance? We're here to help! Fill out the
+                form and our team will get back to you as soon as possible.
               </p>
 
               <div className="space-y-6">
@@ -115,12 +117,13 @@ export default function ContactPage() {
                   </div>
                   <h2 className="text-2xl font-bold mb-4 text-[#1e3a3a]">Message Sent!</h2>
                   <p className="text-gray-600 mb-6">
-                    Thank you for reaching out. We've received your message and will get back to you shortly.
+                    Thank you for reaching out. We've received your message and will get back to you
+                    shortly.
                   </p>
                   <Button
                     onClick={() => {
-                      setIsSubmitted(false)
-                      setFormData({ name: "", email: "", subject: "", message: "" })
+                      setIsSubmitted(false);
+                      setFormData({ name: '', email: '', subject: '', message: '' });
                     }}
                     className="bg-[#6b3e7c] hover:bg-[#5a2e6b]"
                   >
@@ -133,14 +136,26 @@ export default function ContactPage() {
 
                   <div className="space-y-4">
                     <div>
-                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="name"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Your Name
                       </label>
-                      <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
+                      <Input
+                        id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        required
+                      />
                     </div>
 
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="email"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Email Address
                       </label>
                       <Input
@@ -154,10 +169,19 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="subject"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Subject
                       </label>
-                      <Select id="subject" name="subject" value={formData.subject} onChange={handleChange} required>
+                      <Select
+                        id="subject"
+                        name="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
+                        required
+                      >
                         <option value="">Select a subject</option>
                         <option value="general">General Inquiry</option>
                         <option value="support">Technical Support</option>
@@ -168,7 +192,10 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
                         Message
                       </label>
                       <Textarea
@@ -220,5 +247,5 @@ export default function ContactPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -1,65 +1,65 @@
-"use client"
+'use client';
 
-import { Navbar } from "@/components/navbar"
-import { ProjectCard } from "@/components/project-card"
-import { motion } from "framer-motion"
+import { Navbar } from '@/components/navbar';
+import { ProjectCard } from '@/components/project-card';
+import { motion } from 'framer-motion';
 
 const communityProjects = [
   {
-    id: "c1",
-    title: "Open Source Web Framework",
-    category: "Web Development",  // bg-orange-500
-    mentor: "Community Project",
-    skillLevel: "Intermediate" as const,
-    description: "Collaborative project to build a modern web framework for developers."
+    id: 'c1',
+    title: 'Open Source Web Framework',
+    category: 'Web Development', // bg-orange-500
+    mentor: 'Community Project',
+    skillLevel: 'Intermediate' as const,
+    description: 'Collaborative project to build a modern web framework for developers.',
   },
   {
-    id: "c2",
-    title: "Mobile Learning App",
-    category: "Mobile Development",  // bg-blue-500
-    mentor: "Community Project",
-    skillLevel: "Beginner" as const,
-    description: "Student-led initiative to create an educational mobile application."
+    id: 'c2',
+    title: 'Mobile Learning App',
+    category: 'Mobile Development', // bg-blue-500
+    mentor: 'Community Project',
+    skillLevel: 'Beginner' as const,
+    description: 'Student-led initiative to create an educational mobile application.',
   },
   {
-    id: "c3",
-    title: "Smart Campus IoT",
-    category: "Internet of Things",  // bg-emerald-500
-    mentor: "Community Project",
-    skillLevel: "Intermediate" as const,
-    description: "Collaborative IoT project to enhance campus facilities and services."
+    id: 'c3',
+    title: 'Smart Campus IoT',
+    category: 'Internet of Things', // bg-emerald-500
+    mentor: 'Community Project',
+    skillLevel: 'Intermediate' as const,
+    description: 'Collaborative IoT project to enhance campus facilities and services.',
   },
   {
-    id: "c4",
-    title: "Campus Navigation App",
-    category: "Campus Navigation",  // bg-yellow-500
-    mentor: "Community Project",
-    skillLevel: "Intermediate" as const,
-    description: "Build an indoor navigation system for campus buildings."
+    id: 'c4',
+    title: 'Campus Navigation App',
+    category: 'Campus Navigation', // bg-yellow-500
+    mentor: 'Community Project',
+    skillLevel: 'Intermediate' as const,
+    description: 'Build an indoor navigation system for campus buildings.',
   },
   {
-    id: "c5",
-    title: "AI Chatbot for University Services",
-    category: "AI Chatbot",  // bg-indigo-600
-    mentor: "Community Project",
-    skillLevel: "Beginner" as const,
-    description: "Student-built chatbot to answer campus FAQs and connect services."
+    id: 'c5',
+    title: 'AI Chatbot for University Services',
+    category: 'AI Chatbot', // bg-indigo-600
+    mentor: 'Community Project',
+    skillLevel: 'Beginner' as const,
+    description: 'Student-built chatbot to answer campus FAQs and connect services.',
   },
   {
-    id: "c6",
-    title: "Open Data Dashboard",
-    category: "Data Dashboard",  // bg-pink-600
-    mentor: "Community Project",
-    skillLevel: "Intermediate" as const,
-    description: "Build a dashboard to display public and student-generated data."
-  }
-]
+    id: 'c6',
+    title: 'Open Data Dashboard',
+    category: 'Data Dashboard', // bg-pink-600
+    mentor: 'Community Project',
+    skillLevel: 'Intermediate' as const,
+    description: 'Build a dashboard to display public and student-generated data.',
+  },
+];
 
 export default function CommunityProjectsPage() {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      
+
       <main className="flex-1 py-12 bg-gray-50 mt-8">
         <div className="container mx-auto px-4">
           <motion.div
@@ -94,5 +94,5 @@ export default function CommunityProjectsPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

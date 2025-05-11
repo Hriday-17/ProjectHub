@@ -1,110 +1,111 @@
-"use client"
+'use client';
 
-import { useState } from "react"
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select } from "@/components/ui/select"
-import { motion } from "framer-motion"
-import { Search, SlidersHorizontal, Mail } from "lucide-react"
-import { Avatar } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
+import { useState } from 'react';
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Select } from '@/components/ui/select';
+import { motion } from 'framer-motion';
+import { Search, SlidersHorizontal, Mail } from 'lucide-react';
+import { Avatar } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 
 // Mock data for mentors
 const allMentors = [
   {
-    id: "1",
-    name: "Dr. Sarah Johnson",
-    department: "Artificial Intelligence",
-    expertise: ["Neural Networks", "Computer Vision", "NLP"],
-    avatar: "/placeholder.svg?height=150&width=150&text=SJ",
-    availability: "Available",
+    id: '1',
+    name: 'Dr. Sarah Johnson',
+    department: 'Artificial Intelligence',
+    expertise: ['Neural Networks', 'Computer Vision', 'NLP'],
+    avatar: '/placeholder.svg?height=150&width=150&text=SJ',
+    availability: 'Available',
   },
   {
-    id: "2",
-    name: "Prof. Michael Chen",
-    department: "Data Science",
-    expertise: ["Big Data", "Statistical Analysis", "Data Visualization"],
-    avatar: "/placeholder.svg?height=150&width=150&text=MC",
-    availability: "Limited",
+    id: '2',
+    name: 'Prof. Michael Chen',
+    department: 'Data Science',
+    expertise: ['Big Data', 'Statistical Analysis', 'Data Visualization'],
+    avatar: '/placeholder.svg?height=150&width=150&text=MC',
+    availability: 'Limited',
   },
   {
-    id: "3",
-    name: "Dr. Emily Rodriguez",
-    department: "Mobile App Development",
-    expertise: ["iOS Development", "Android Development", "AR/VR"],
-    avatar: "/placeholder.svg?height=150&width=150&text=ER",
-    availability: "Available",
+    id: '3',
+    name: 'Dr. Emily Rodriguez',
+    department: 'Mobile App Development',
+    expertise: ['iOS Development', 'Android Development', 'AR/VR'],
+    avatar: '/placeholder.svg?height=150&width=150&text=ER',
+    availability: 'Available',
   },
   {
-    id: "4",
-    name: "Dr. James Wilson",
-    department: "Machine Learning",
-    expertise: ["Deep Learning", "Reinforcement Learning", "Computer Vision"],
-    avatar: "/placeholder.svg?height=150&width=150&text=JW",
-    availability: "Unavailable",
+    id: '4',
+    name: 'Dr. James Wilson',
+    department: 'Machine Learning',
+    expertise: ['Deep Learning', 'Reinforcement Learning', 'Computer Vision'],
+    avatar: '/placeholder.svg?height=150&width=150&text=JW',
+    availability: 'Unavailable',
   },
   {
-    id: "5",
-    name: "Prof. Lisa Thompson",
-    department: "Blockchain",
-    expertise: ["Smart Contracts", "Cryptocurrency", "Distributed Systems"],
-    avatar: "/placeholder.svg?height=150&width=150&text=LT",
-    availability: "Available",
+    id: '5',
+    name: 'Prof. Lisa Thompson',
+    department: 'Blockchain',
+    expertise: ['Smart Contracts', 'Cryptocurrency', 'Distributed Systems'],
+    avatar: '/placeholder.svg?height=150&width=150&text=LT',
+    availability: 'Available',
   },
   {
-    id: "6",
-    name: "Dr. Robert Brown",
-    department: "Internet of Things",
-    expertise: ["Embedded Systems", "Sensor Networks", "Smart Devices"],
-    avatar: "/placeholder.svg?height=150&width=150&text=RB",
-    availability: "Limited",
+    id: '6',
+    name: 'Dr. Robert Brown',
+    department: 'Internet of Things',
+    expertise: ['Embedded Systems', 'Sensor Networks', 'Smart Devices'],
+    avatar: '/placeholder.svg?height=150&width=150&text=RB',
+    availability: 'Limited',
   },
   {
-    id: "7",
-    name: "Dr. Michael Lee",
-    department: "Cybersecurity",
-    expertise: ["Network Security", "Ethical Hacking", "Cryptography"],
-    avatar: "/placeholder.svg?height=150&width=150&text=ML",
-    availability: "Available",
+    id: '7',
+    name: 'Dr. Michael Lee',
+    department: 'Cybersecurity',
+    expertise: ['Network Security', 'Ethical Hacking', 'Cryptography'],
+    avatar: '/placeholder.svg?height=150&width=150&text=ML',
+    availability: 'Available',
   },
   {
-    id: "8",
-    name: "Prof. Jennifer Adams",
-    department: "Cloud Computing",
-    expertise: ["AWS", "Azure", "Serverless Architecture"],
-    avatar: "/placeholder.svg?height=150&width=150&text=JA",
-    availability: "Limited",
+    id: '8',
+    name: 'Prof. Jennifer Adams',
+    department: 'Cloud Computing',
+    expertise: ['AWS', 'Azure', 'Serverless Architecture'],
+    avatar: '/placeholder.svg?height=150&width=150&text=JA',
+    availability: 'Limited',
   },
-]
+];
 
 export default function MentorsPage() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const [departmentFilter, setDepartmentFilter] = useState("")
-  const [availabilityFilter, setAvailabilityFilter] = useState("")
-  const [showFilters, setShowFilters] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('');
+  const [departmentFilter, setDepartmentFilter] = useState('');
+  const [availabilityFilter, setAvailabilityFilter] = useState('');
+  const [showFilters, setShowFilters] = useState(false);
 
   const toggleFilters = () => {
-    setShowFilters(!showFilters)
-  }
+    setShowFilters(!showFilters);
+  };
 
   const filteredMentors = allMentors.filter((mentor) => {
     const matchesSearch =
       mentor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      mentor.expertise.some((exp) => exp.toLowerCase().includes(searchTerm.toLowerCase()))
+      mentor.expertise.some((exp) => exp.toLowerCase().includes(searchTerm.toLowerCase()));
 
-    const matchesDepartment = departmentFilter === "" || mentor.department === departmentFilter
+    const matchesDepartment = departmentFilter === '' || mentor.department === departmentFilter;
 
-    const matchesAvailability = availabilityFilter === "" || mentor.availability === availabilityFilter
+    const matchesAvailability =
+      availabilityFilter === '' || mentor.availability === availabilityFilter;
 
-    return matchesSearch && matchesDepartment && matchesAvailability
-  })
+    return matchesSearch && matchesDepartment && matchesAvailability;
+  });
 
   const availabilityColors = {
-    Available: "bg-green-100 text-green-800",
-    Limited: "bg-yellow-100 text-yellow-800",
-    Unavailable: "bg-red-100 text-red-800",
-  }
+    Available: 'bg-green-100 text-green-800',
+    Limited: 'bg-yellow-100 text-yellow-800',
+    Unavailable: 'bg-red-100 text-red-800',
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -141,7 +142,7 @@ export default function MentorsPage() {
             <motion.div
               className="bg-white p-6 rounded-xl shadow-sm mb-8 grid grid-cols-1 md:grid-cols-2 gap-4"
               initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
+              animate={{ opacity: 1, height: 'auto' }}
               transition={{ duration: 0.3 }}
             >
               <div>
@@ -181,8 +182,9 @@ export default function MentorsPage() {
           )}
 
           <p className="text-gray-600 mb-8">
-            Connect with expert mentors in computer science and AI who can guide you through your project journey. Our
-            mentors are experienced professionals and academics who are passionate about helping students succeed.
+            Connect with expert mentors in computer science and AI who can guide you through your
+            project journey. Our mentors are experienced professionals and academics who are
+            passionate about helping students succeed.
           </p>
 
           {filteredMentors.length > 0 ? (
@@ -204,14 +206,18 @@ export default function MentorsPage() {
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-4">
                         <Avatar className="h-16 w-16">
-                          <img src={mentor.avatar || "/placeholder.svg"} alt={mentor.name} />
+                          <img src={mentor.avatar || '/placeholder.svg'} alt={mentor.name} />
                         </Avatar>
                         <div>
                           <h3 className="text-xl font-bold text-[#1e3a3a]">{mentor.name}</h3>
                           <p className="text-[#6b3e7c]">{mentor.department}</p>
                         </div>
                       </div>
-                      <Badge className={availabilityColors[mentor.availability as keyof typeof availabilityColors]}>
+                      <Badge
+                        className={
+                          availabilityColors[mentor.availability as keyof typeof availabilityColors]
+                        }
+                      >
                         {mentor.availability}
                       </Badge>
                     </div>
@@ -228,7 +234,9 @@ export default function MentorsPage() {
                     </div>
 
                     <div className="flex gap-3">
-                      <Button className="flex-1 bg-[#6b3e7c] hover:bg-[#5a2e6b]">View Profile</Button>
+                      <Button className="flex-1 bg-[#6b3e7c] hover:bg-[#5a2e6b]">
+                        View Profile
+                      </Button>
                       <Button variant="outline" className="flex items-center gap-2">
                         <Mail className="h-4 w-4" />
                         Contact
@@ -260,5 +268,5 @@ export default function MentorsPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

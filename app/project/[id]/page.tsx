@@ -1,51 +1,51 @@
 // Project detail page showing project information and application status
-"use client"
+'use client';
 
-import { Navbar } from "@/components/navbar"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { MentorPanel } from "@/components/mentor-panel"
-import { TeamFormation } from "@/components/team-formation"
-import { ProjectSubmissionForm } from "@/components/project-submission-form"
-import { ChatBox } from "@/components/chat-box"
-import Link from "next/link"
-import { ArrowLeft, Calendar, Users, BookOpen } from "lucide-react"
-import { useParams } from "next/navigation"
-import { useEffect, useState } from "react"
+import { Navbar } from '@/components/navbar';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { MentorPanel } from '@/components/mentor-panel';
+import { TeamFormation } from '@/components/team-formation';
+import { ProjectSubmissionForm } from '@/components/project-submission-form';
+import { ChatBox } from '@/components/chat-box';
+import Link from 'next/link';
+import { ArrowLeft, Calendar, Users, BookOpen } from 'lucide-react';
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function ProjectDetailPage() {
-  const params = useParams()
-  const [projectId, setProjectId] = useState<string>("")
-  const [isMounted, setIsMounted] = useState(false)
-  const [project, setProject] = useState<any>(null)
-  
+  const params = useParams();
+  const [projectId, setProjectId] = useState<string>('');
+  const [isMounted, setIsMounted] = useState(false);
+  const [project, setProject] = useState<any>(null);
+
   useEffect(() => {
-    setIsMounted(true)
+    setIsMounted(true);
     // Only set projectId after client-side hydration
     if (params && params.id) {
-      const id = Array.isArray(params.id) ? params.id[0] : params.id as string
-      setProjectId(id)
-      
+      const id = Array.isArray(params.id) ? params.id[0] : (params.id as string);
+      setProjectId(id);
+
       // Initialize project data after client-side hydration
       setProject({
         id: id,
-        title: "AI-Powered Healthcare Assistant",
-        category: "Engineering & Computer Science",
+        title: 'AI-Powered Healthcare Assistant',
+        category: 'Engineering & Computer Science',
         mentor: {
-          name: "Dr. Sarah Johnson",
-          department: "Computer Science",
-          avatar: "/placeholder.svg?height=80&width=80",
-          status: "approved" as const,
+          name: 'Dr. Sarah Johnson',
+          department: 'Computer Science',
+          avatar: '/placeholder.svg?height=80&width=80',
+          status: 'approved' as const,
         },
         description:
-          "Develop an AI-powered healthcare assistant that can help patients manage their medications, schedule appointments, and provide basic health information. The assistant should be able to understand natural language queries and provide accurate responses.",
-        skillLevel: "Intermediate",
-        timeline: "12 weeks",
-        teamSize: "3-5 students",
-        status: "Approved",
-      })
+          'Develop an AI-powered healthcare assistant that can help patients manage their medications, schedule appointments, and provide basic health information. The assistant should be able to understand natural language queries and provide accurate responses.',
+        skillLevel: 'Intermediate',
+        timeline: '12 weeks',
+        teamSize: '3-5 students',
+        status: 'Approved',
+      });
     }
-  }, [params])
+  }, [params]);
 
   // Return a loading state during server-side rendering or initial client render
   if (!isMounted || !project) {
@@ -62,7 +62,7 @@ export default function ProjectDetailPage() {
           </div>
         </main>
       </div>
-    )
+    );
   }
 
   return (
@@ -84,7 +84,9 @@ export default function ProjectDetailPage() {
               </div>
               <Badge
                 className={
-                  project.status === "Approved" ? "bg-green-100 text-green-800" : "bg-yellow-100 text-yellow-800"
+                  project.status === 'Approved'
+                    ? 'bg-green-100 text-green-800'
+                    : 'bg-yellow-100 text-yellow-800'
                 }
               >
                 {project.status}
@@ -142,5 +144,5 @@ export default function ProjectDetailPage() {
         </div>
       </main>
     </div>
-  )
+  );
 }

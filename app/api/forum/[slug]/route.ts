@@ -1,11 +1,8 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: { slug: string } }
-) {
+export async function DELETE(request: Request, { params }: { params: { slug: string } }) {
   try {
-    const { slug } = params
+    const { slug } = params;
 
     // TODO: Delete forum from database
     // Example with Prisma:
@@ -16,12 +13,9 @@ export async function DELETE(
     //   }
     // })
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Failed to delete forum:', error)
-    return NextResponse.json(
-      { error: 'Failed to delete forum' },
-      { status: 500 }
-    )
+    console.error('Failed to delete forum:', error);
+    return NextResponse.json({ error: 'Failed to delete forum' }, { status: 500 });
   }
 }

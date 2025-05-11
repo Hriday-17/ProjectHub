@@ -10,7 +10,7 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-  
+
   /* Added utility class for menu toggle */
   .overflow-hidden {
     overflow: hidden;
