@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     // Find user by email
     const { data: user, error: userError } = await supabase
       .from('users')
-      .select('id, username, email, password, role, is_verified')
+      .select('id, username, email, password, is_verified')
       .eq('email', email)
       .single();
 
@@ -46,11 +46,12 @@ export async function POST(req: NextRequest) {
     // Check if email is verified
     if (!user.is_verified) {
       throw new ApiErrorResponse(AUTH_ERRORS.EMAIL_NOT_VERIFIED);
-    }    // Generate JWT token
+    }
+
+    // Generate JWT token
     const token = generateToken({
       userId: user.id,
       email: user.email,
-      role: user.role,
       isVerified: user.is_verified
     });
     
@@ -64,7 +65,6 @@ export async function POST(req: NextRequest) {
         id: user.id,
         username: user.username,
         email: user.email,
-        role: user.role,
         is_verified: user.is_verified
       }
     });

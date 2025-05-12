@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { supabase } from '@/lib/supabase-client';
+import { createClient } from '@supabase/supabase-js';
 import bcrypt from 'bcryptjs';
 import { z } from 'zod';
 import { AUTH_ERRORS, ApiErrorResponse, handleApiError } from '@/lib/api-error';
@@ -46,25 +47,37 @@ export async function POST(req: NextRequest) {
 
     if (existingUser) {
       throw new ApiErrorResponse(AUTH_ERRORS.USER_EXISTS);
-    }    // Hash password
+    }
+
+    // Hash password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     console.log('Inserting new user:', { username, email, hashedPassword });
     
-    // Insert new user
-    const { data: newUser, error: insertError } = await supabase
+    // Insert new user using service role client for admin operations
+    const adminClient = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!,
+      {
+        auth: {
+          autoRefreshToken: false,
+          persistSession: false
+        }
+      }
+    );
+
+    const { data: newUser, error: insertError } = await adminClient
       .from('users')
       .insert({
         username,
         email,
         password: hashedPassword,
-        role: 'student', // Default role
         is_verified: false, // Require email verification
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       })
-      .select('id, username, email, role, is_verified')
+      .select('id, username, email, is_verified')
       .single();
 
     if (insertError) {
@@ -81,12 +94,9 @@ export async function POST(req: NextRequest) {
     const token = generateToken({
       userId: newUser.id,
       email: newUser.email,
-      role: newUser.role,
       isVerified: false
-    });
-
-    // Set auth cookie - default to 24 hours for new registrations
-    setAuthCookie(token, 24 * 60 * 60);
+    });    // Set auth cookie - default to 24 hours for new registrations
+    await setAuthCookie(token, 24 * 60 * 60);
 
     return Response.json({
       message: 'Registration successful. Please check your email for verification.',
@@ -94,7 +104,6 @@ export async function POST(req: NextRequest) {
         id: newUser.id,
         username: newUser.username,
         email: newUser.email,
-        role: newUser.role,
         is_verified: newUser.is_verified,
       },
     }, { status: 201 });

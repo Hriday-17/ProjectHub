@@ -84,10 +84,17 @@ export function generateToken(payload: Omit<JWTPayload, 'iat' | 'exp'>) {  if (!
 /**
  * Sets the authentication cookie with the JWT token
  */
-export function setAuthCookie(token: string, maxAge: number = 24 * 60 * 60) {
+export async function setAuthCookie(token: string, maxAge: number = 24 * 60 * 60) {
   const cookieStore = getCookies();
-  // Next.js cookies() API only accepts name and value
-  cookieStore.set('auth-token', token);
+  await cookieStore.set({
+    name: 'auth-token',
+    value: token,
+    httpnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: maxAge,
+    path: '/'
+  });
 }
 
 /**
